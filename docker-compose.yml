@@ -9,3 +9,29 @@ services:
     volumes:
       - ./client:/app
       - /app/node_modules
+
+  usersDb:
+    image: mongo:latest
+    container_name: ecommerce_user_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - users-volume:/data/db
+
+  user_service:
+    build: ./userService
+    container_name: ecommerce_user_service
+    stdin_open: true
+    ports:
+      - "3001:3001"
+    links:
+      - usersDb
+    depends_on:
+      - usersDb
+    volumes:
+      - ./userService:/app
+      - /app/node_modules
+
+volumes:
+  users-volume:
+    driver: local
