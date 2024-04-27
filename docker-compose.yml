@@ -32,6 +32,22 @@ services:
       - ./userService:/app
       - /app/node_modules
 
+    categoryService:
+      build: ./categoryService
+      container_name: ecommerce_category_Service
+      stdin_open: true
+      ports:
+        - "5003:5003"
+      networks:
+        - my-app
+      volumes:
+        - ./categoryService:/app
+        - /app/__pycache__
+
 volumes:
   users-volume:
     driver: local
+
+networks:
+  my-app:
+    driver: bridge
