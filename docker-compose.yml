@@ -14,7 +14,7 @@ services:
     image: mongo:latest
     container_name: ecommerce_user_db
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - users-volume:/data/db
 
@@ -23,7 +23,7 @@ services:
     container_name: ecommerce_user_service
     stdin_open: true
     ports:
-      - "3001:3001"
+      - "5001:5001"
     links:
       - usersDb
     depends_on:
