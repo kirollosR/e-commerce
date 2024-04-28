@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 console.log('Swagger documentation is available at http://localhost:5001/api-docs');
 
-app.use('/api', userRouter);
+app.use('/api/user', userRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
