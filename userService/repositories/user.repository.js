@@ -1,7 +1,14 @@
 const User = require('../models/user.model');
 
 function userRepository() {
-    const addUser = (data, res) => {
+    const checkUsernameExists = async (username) => {
+        count = await User.countDocuments({ username: username });
+        // console.log(count);
+        return count > 0 ? true : false;
+        
+    }
+
+    const addUser = async (data, res) => {
         const user = new User(data);
         console.log(user);
 
@@ -9,7 +16,7 @@ function userRepository() {
             return res.status(400).json({ success: false, error: err });
         }
 
-        user
+        await user
             .save()
             .then(() => {
                 return res.status(201).json({
@@ -28,6 +35,7 @@ function userRepository() {
 
     return {
         addUser,
+        checkUsernameExists,
     };
 }
 

@@ -14,6 +14,12 @@ const options = {
         }
       ],
     },
+    servers: [
+      {
+        url: 'http://localhost:5001',
+        description: 'Development server'
+      }
+    ]
   },
   apis: ['./routes/*.js'], // Path to the API routes
 };

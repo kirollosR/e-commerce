@@ -5,6 +5,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 
 const db = require('./config/db');
+// const db = require('./config/db_mongoDb');
 const userRouter = require('./routes/user.routes');
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 
 // Define your routes here
 app.get('/', (req, res) => {

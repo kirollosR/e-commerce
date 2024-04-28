@@ -16,6 +16,7 @@
     "mongoose": "^5.9.29",
     "nodemon": "^2.0.4",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "express-validator": "^7.0.1"
   }
 }
