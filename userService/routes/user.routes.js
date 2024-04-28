@@ -1,7 +1,8 @@
 const express = require('express');
-const {body, validationResult} = require("express-validator");
+const {body} = require("express-validator");
 const healthCheck = require('../controllers/healthCheck.controller');
 const addUser = require('../controllers/addUser.controller');
+const getAllUsers = require('../controllers/getAllUsers.controller');
 
 
 const router = express.Router();
@@ -19,6 +20,8 @@ const router = express.Router();
 *         description: Successful response with a list of users.
 */
 router.get('/', healthCheck);
+
+// TODO: admin middleware
 
 router.post(
     '/addUser',
@@ -41,5 +44,12 @@ router.post(
         .matches(/^01\d{9}$/)
         .withMessage('Phone number must be in the format 01xxxxxxxxx'),
      addUser);
+
+// TODO: update user using patch
+// TODO: delete user using delete by ID
+// TODO: get user by ID or Token
+
+// TODO: add admin middleware to the function
+router.get('/getAllUsers', getAllUsers);
 
 module.exports = router;
