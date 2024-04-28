@@ -1,6 +1,7 @@
 const express = require('express');
 // const userController = require('../controllers/user.controller');
 const healthCheck = require('../controllers/healthCheck.controller');
+const addUser = require('../controllers/addUser.controller');
 
 
 const router = express.Router();
@@ -18,5 +19,7 @@ const router = express.Router();
  *         description: Successful response with a list of users.
  */
 router.get('/', healthCheck);
+
+router.post('/addUser', addUser);
 
 module.exports = router;
