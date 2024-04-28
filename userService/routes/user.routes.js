@@ -1,5 +1,5 @@
 const express = require('express');
-const {body} = require("express-validator");
+const { body } = require("express-validator");
 const healthCheck = require('../controllers/healthCheck.controller');
 const addUser = require('../controllers/addUser.controller');
 const getAllUsers = require('../controllers/getAllUsers.controller');
@@ -24,7 +24,53 @@ const router = express.Router();
 router.get('/', healthCheck);
 
 // TODO: admin middleware
-
+/**
+ * @swagger
+ *   /api/user:
+ *   post:
+ *     tags:
+ *       - User
+ *     description: add User
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: Kirollos rafik
+ *               email: 
+ *                 type: string
+ *                 example: k@gmail.com
+ *               usrname:
+ *                 type: string
+ *                 example: k123
+ *               phone:
+ *                 type: string
+ *                 example: 01234567890
+ *               address:
+ *                 type: string
+ *                 example: 17 mohamed street
+ *     responses:
+ *       '201':
+ *         description: Created succesfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 id:
+ *                   type: string
+ *                   example: 662ec00131ad8002c77c734a
+ *                 message:
+ *                   type: string
+ *                   example: User created!
+ */
 router.post(
     '/addUser',
     body('name')
@@ -68,6 +114,7 @@ router.patch(
         .matches(/^01\d{9}$/)
         .withMessage('Phone number must be in the format 01xxxxxxxxx'),
         updateUser);
+
 // TODO: delete user using delete by ID
 // TODO: get user by ID or Token
 

@@ -19,7 +19,7 @@ addUser = async (req, res) => {
         // console.log(count);
         if(count){
             console.log('Username already exists');
-            return res.status(400).json({
+            return res.status(403).json({
                 success: false,
                 error: 'Username already exists',
             });
