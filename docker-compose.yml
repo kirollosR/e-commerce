@@ -10,11 +10,39 @@ services:
       - ./client:/app
       - /app/node_modules
 
+  auth-service:
+    build: ./authService
+    container_name: ecommerce_auth_service
+    ports:
+      - "5000:5000"
+    networks:
+      - e-commerce-app
+    links:
+      - auth-db
+    restart: on-failure
+    depends_on:
+      - auth-db
+    volumes:
+      - ./authService:/app
+      - /app/node_modules
+
+  auth-db:
+    image: mongo:latest
+    container_name: ecommerce_user_auth_db
+    ports:
+      - "27020:27020"
+    networks:
+      - e-commerce-app
+    volumes:
+      - auth-volume:/data/db
+
   usersDb:
     image: mongo:latest
     container_name: ecommerce_user_db
     ports:
       - "27018:27017"
+    networks:
+      - e-commerce-app
     volumes:
       - users-volume:/data/db
 
@@ -24,6 +52,8 @@ services:
     stdin_open: true
     ports:
       - "5001:5001"
+    networks:
+      - e-commerce-app
     links:
       - usersDb
     depends_on:
@@ -32,6 +62,11 @@ services:
       - ./userService:/app
       - /app/node_modules
 
+networks:
+  e-commerce-app:
+    driver: bridge
 volumes:
+  auth-volume:
+    driver: local
   users-volume:
     driver: local
