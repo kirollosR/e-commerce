@@ -13,7 +13,7 @@ const userSchema = new Schema(
         role: {type: String, default: 'user'},
         email: {type: String, required: true},
         username: {type: String, required: true},
-        phone: {type: String, required: true},
+        phone: String,
         address: {type: String, required: true}
     },
     {timestamps: true}

@@ -1,5 +1,6 @@
 const Repository = require('../repositories/user.repository');
 const { validationResult } = require('express-validator');
+const User = require('../models/user.model');
 
 const repository = new Repository();
 
@@ -24,7 +25,24 @@ addUser = async (req, res) => {
             });
         }
 
-        await repository.addUser(body, res);
+        const user = new User(body);
+        console.log(user);
+
+        await user
+            .save()
+            .then(() => {
+                return res.status(201).json({
+                    success: true,
+                    id: user._id,
+                    message: 'User created!',
+                });
+            })
+            .catch((error) => {
+                return res.status(400).json({
+                    error,
+                    message: 'User not created!',
+                });
+            });
         // console.log(user);
 
     } catch (error){
