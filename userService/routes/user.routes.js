@@ -21,7 +21,7 @@ const router = express.Router();
 *       200:
 *         description: Successful response with a list of users.
 */
-router.get('/', healthCheck);
+router.get('/healthCheck', healthCheck);
 
 // TODO: admin middleware
 /**
