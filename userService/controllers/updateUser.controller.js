@@ -20,7 +20,12 @@ updateUser = async (req, res) => {
             });
         }
 
+        // TODO: check if user want to update username if yes check if the new username is already taken
+
         Object.keys(data).forEach(key => {
+            console.log(key);
+            //if key = username 
+                //check if the new username is already taken with post endpoint logic
             user[key] = data[key];
         });
 

@@ -26,7 +26,7 @@ router.get('/', healthCheck);
 // TODO: admin middleware
 /**
  * @swagger
- *   /api/user:
+ * /user:
  *   post:
  *     tags:
  *       - User
@@ -72,7 +72,7 @@ router.get('/', healthCheck);
  *                   example: User created!
  */
 router.post(
-    '/addUser',
+    '/',
     body('name')
         .isString()
         .withMessage('Name must be a string')
@@ -96,7 +96,7 @@ router.post(
 // TODO: update user using patch
 // router.patch('/updateUser/:id', updateUser);
 router.patch(
-    '/updateUser/:id',
+    '/:id',
     body('name')
         .optional()
         .isString()
@@ -119,7 +119,7 @@ router.patch(
 // TODO: get user by ID or Token
 
 // TODO: add admin middleware to the function
-router.get('/getAllUsers', getAllUsers);
+router.get('/', getAllUsers);
 
 router.get('/getUserById/:id', getUserById);
 

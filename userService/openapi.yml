@@ -8,7 +8,7 @@ tags:
     description: ''
 
 servers:
-  - url: http://localhost:5001/api
+  - url: http://localhost:5001/
 
 paths:
   /user:
@@ -29,7 +29,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/addUserResponse'
-        
 
 components:
   schemas:
