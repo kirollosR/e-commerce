@@ -1,0 +1,70 @@
+openapi: '3.0.2'
+info:
+  title: User Service
+  version: '1.0'
+  description: User Service API Documentation of e-commerce app
+tags:
+  - name: User
+    description: ''
+
+servers:
+  - url: http://localhost:5001/
+
+paths:
+  /user:
+    post:
+      tags:
+        - User
+      description: add User api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/addUserRequest"
+      responses:
+        '201':
+          description: Created succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/addUserResponse'
+
+components:
+  schemas:
+    addUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Kirollos rafik
+        email: 
+          type: string
+          example: k@gmail.com
+        usrname:
+          type: string
+          example: k123
+        phone:
+          type: string
+          example: 01234567890
+        address:
+          type: string
+          example: 17 mohamed street
+    addUserResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        id:
+          type: string
+          example: 662ec00131ad8002c77c734a
+        message:
+          type: string
+          example: User created!
+          
+
+
+          
+
+ 

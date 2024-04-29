@@ -4,5 +4,9 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"yaml.schemas": {
+			"openapi:v3": "file:///e%3A/University/Year%204/Second%20Term/SA-2/Project/e-commerce/userService/openapi.yml"
+		}
+	}
 }

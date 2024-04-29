@@ -36,31 +36,31 @@ services:
     volumes:
       - auth-volume:/data/db
 
-  # usersDb:
-  #   image: mongo:latest
-  #   container_name: ecommerce_user_db
-  #   ports:
-  #     - "27018:27017"
-  #   networks:
-  #     - e-commerce-app
-  #   volumes:
-  #     - users-volume:/data/db
+  usersDb:
+    image: mongo:latest
+    container_name: ecommerce_user_db
+    ports:
+      - "27018:27017"
+    networks:
+      - e-commerce-app
+    volumes:
+      - users-volume:/data/db
 
-  # user_service:
-  #   build: ./userService
-  #   container_name: ecommerce_user_service
-  #   stdin_open: true
-  #   ports:
-  #     - "5001:5001"
-  #   networks:
-  #     - e-commerce-app
-  #   links:
-  #     - usersDb
-  #   depends_on:
-  #     - usersDb
-  #   volumes:
-  #     - ./userService:/app
-  #     - /app/node_modules
+  user_service:
+    build: ./userService
+    container_name: ecommerce_user_service
+    stdin_open: true
+    ports:
+      - "5001:5001"
+    networks:
+      - e-commerce-app
+    links:
+      - usersDb
+    depends_on:
+      - usersDb
+    volumes:
+      - ./userService:/app
+      - /app/node_modules
 
 networks:
   e-commerce-app:
