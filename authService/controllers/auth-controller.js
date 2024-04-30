@@ -51,19 +51,20 @@ getIDbyToken = async (req, res) => {
 
 
 // Inside the addAuthentication function
-const addAuthentication = async ({ username, password, token }) => {
-    try {
-        if (!username || !password || !token) {
-            throw new Error("Missing required fields");
-        }
-        const User = require('../models/auth-model');
+const addAuthentication = async ({ _id, username, password, token }) => {
+  try {
+      if (!_id || !username || !password || !token) {
+          throw new Error("Missing required fields");
+      }
+      const User = require('../models/auth-model');
 
-        await User.create({ username, password, token });
-    } catch (error) {
-        console.error("Error adding user:", error);
-        throw error;
-    }
+      await User.create({ _id, username, password, token });
+  } catch (error) {
+      console.error("Error adding user:", error);
+      throw error;
+  }
 };
+
 
 
 register = async (req, res) => {
@@ -96,21 +97,23 @@ register = async (req, res) => {
     
       // 4- INSERT USER OBJECT INTO USER DB
       AddUser(userData)
-        .then(response => {
-          // console.log(response.data);
-          res.status(200).json( response.data );
-        })
-        .catch(error => {
+      .then(response => {
+          const userID = response.data.id; // Extract ID from the response
+          const objectId = mongoose.Types.ObjectId(userID); // Convert ID to ObjectId
+          return addAuthentication({ _id: objectId, username: userData.username, password: userData.password, token: userData.token });
+      })
+      .then(() => {
+          res.status(200).json({ message: 'User added successfully', user: userData });
+      })
+      .catch(error => {
           if (error.response) {
-            // console.log(error.response.data);
-            res.status(403).json(error.response.data);
+              res.status(403).json(error.response.data);
           } else {
-            console.log('Error', error.message);
+              console.error('Error:', error.message);
+              res.status(500).json({ error: 'Internal server error' });
           }
-        });
+      });
 
-        // 5- INSERT USER INTO AUTH DB
-        await addAuthentication(userData);
 
       } catch (err) {
         res.status(500).json({ err: err });
