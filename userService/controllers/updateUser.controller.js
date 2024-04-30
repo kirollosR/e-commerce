@@ -39,7 +39,7 @@ const updateUser = async (req, res) => {
 
     } catch (error) {
         console.error('Error:', error);
-        res.status(error.status || 500).json(error.data || { error: error });
+        res.status(error.status || 500).json(error.data || error );
     }
 }
 

@@ -1,6 +1,6 @@
 const { getIdByTokenApi } = require('../apis/authApis');
 
-getIdByToken = async (req, res) => {
+const getIdByToken = async (req, res) => {
     getIdByTokenApi(req.params.token)
         .then(response => {
           // console.log(response.data);

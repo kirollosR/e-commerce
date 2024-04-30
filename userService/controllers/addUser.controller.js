@@ -3,7 +3,7 @@ const { validationResult } = require('express-validator');
 const User = require('../models/user.model');
 
 
-addUser = async (req, res) => {
+const addUser = async (req, res) => {
     try{
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -11,7 +11,7 @@ addUser = async (req, res) => {
         }
 
         const body = req.body;
-        
+
         // Disallow role to be set by the user
         if (body.hasOwnProperty('role')) {
             delete body.role;

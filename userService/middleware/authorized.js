@@ -1,10 +1,13 @@
+const repository = require('../repositories/user.repository');
 const User = require('../models/user.model');
 
 const authorized = async (req, res, next) => {
     const {token} = req.headers;
-    const user = await User.find();
-    if(user[0]){
-        res.locals.user = user[0];
+    const userId = await repository.getIdByToken(token);
+    const user = await User.findById(userId);
+    console.log(user);
+    if(user){
+        
         next();
     } else {
         res.statusCode = 403;
