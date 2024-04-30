@@ -99,7 +99,7 @@ router.post(
 // TODO: update user using patch
 // router.patch('/updateUser/:id', updateUser);
 router.patch(
-    '/:id',
+    '/:token',
     body('name')
         .optional()
         .isString()

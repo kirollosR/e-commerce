@@ -9,12 +9,11 @@ getIdByToken = async (req, res) => {
         .catch(error => {
           if (error.response) {
             // console.log(error.response.data);
-            res.status(403).json(error.response.data);
+            res.status(error.response.status).json(error.response.data);
           } else {
             console.log('Error', error.message);
           }
         });
-
 }
 
 module.exports = getIdByToken;

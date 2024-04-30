@@ -1,18 +1,22 @@
 const User = require('../models/user.model');
 const { validationResult } = require('express-validator');
+const { getIdByTokenApi } = require('../apis/authApis');
+const repository = require('../repositories/user.repository');
 
-updateUser = async (req, res) => {
+
+const updateUser = async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        // TODO: take user from token
-        const id = req.params.id;
+        const userId = await repository.getIdByToken(req.params.token);
+        console.log(userId);
+
         const data = req.body;
 
-        const user = await User.findById(id);
+        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({
                 success: false,
@@ -20,12 +24,7 @@ updateUser = async (req, res) => {
             });
         }
 
-        // TODO: check if user want to update username if yes check if the new username is already taken
-
         Object.keys(data).forEach(key => {
-            console.log(key);
-            //if key = username 
-            //check if the new username is already taken with post endpoint logic
             user[key] = data[key];
         });
 
@@ -33,16 +32,14 @@ updateUser = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            updated_user: user,
+            updatedUser: user,
             message: 'User updated!',
         });
 
-
     } catch (error) {
-        res.statusCode = 500;
-        res.send({ message: error });
+        console.error('Error:', error);
+        res.status(error.status || 500).json(error.data || { error: error });
     }
-
 }
 
 module.exports = updateUser;

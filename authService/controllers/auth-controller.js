@@ -110,7 +110,10 @@ register = async (req, res) => {
               res.status(error.response.status).json(error.response.data);
           } else {
               console.error('Error:', error.message);
-              res.status(500).json({ error: 'Internal server error' });
+              res.status(500).json({ 
+                success: false,
+                error: 'User service is under maintaince' 
+              });
           }
       });
 

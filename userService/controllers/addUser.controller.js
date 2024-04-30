@@ -1,8 +1,6 @@
-const Repository = require('../repositories/user.repository');
+const repository = require('../repositories/user.repository');
 const { validationResult } = require('express-validator');
 const User = require('../models/user.model');
-
-const repository = new Repository();
 
 
 addUser = async (req, res) => {
