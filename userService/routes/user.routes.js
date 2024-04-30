@@ -3,7 +3,7 @@ const { body } = require("express-validator");
 const healthCheck = require('../controllers/healthCheck.controller');
 const addUser = require('../controllers/addUser.controller');
 const getAllUsers = require('../controllers/getAllUsers.controller');
-const getUserById = require('../controllers/getUserById.controller');
+const getUser = require('../controllers/getUser.controller');
 const updateUser = require('../controllers/updateUser.controller');
 const getIdByToken = require('../controllers/getIdByToken.controller');
 const deleteUser = require('../controllers/deleteUser.controller');
@@ -126,6 +126,6 @@ router.delete('/:token', admin, deleteUser);
 
 router.get('/', admin, getAllUsers);
 
-router.get('/getUserById/:id', authorized, getUserById);
+router.get('/getUser/', authorized, getUser);
 
 module.exports = router;

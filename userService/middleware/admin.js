@@ -49,10 +49,6 @@ const admin = async (req, res, next) => {
                 message: "You are not authorized to access this page",
             });
         }
-        // res.statusCode = 403;
-        //     res.send({
-        //         message: "You are not authorized to access this page",
-        //     });
     }
 }
 
