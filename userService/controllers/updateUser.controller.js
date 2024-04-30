@@ -10,7 +10,7 @@ const updateUser = async (req, res) => {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const userId = await repository.getIdByToken(req.params.token);
+        const userId = await repository.getIdByToken(req.headers.token);
         console.log(userId);
 
         const data = req.body;
@@ -26,7 +26,15 @@ const updateUser = async (req, res) => {
          // TODO: check if user want to update username if yes check if the new username is already taken
 
         Object.keys(data).forEach(key => {
-            user[key] = data[key];
+            if (key === 'username') {
+                return res.status(400).json({   
+                    success: false,
+                    error: 'You cannot update your username',
+                });
+            }else {
+                user[key] = data[key];
+            }
+            
         });
 
         await user.save();

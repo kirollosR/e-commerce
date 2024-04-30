@@ -100,7 +100,7 @@ router.post(
      addUser);
 
 router.patch(
-    '/:token',
+    '/',
     body('name')
         .optional()
         .isString()
@@ -117,6 +117,7 @@ router.patch(
         .optional()
         .matches(/^01\d{9}$/)
         .withMessage('Phone number must be in the format 01xxxxxxxxx'),
+        authorized,
         updateUser);
 
 router.delete('/:id', admin, deleteUser);
