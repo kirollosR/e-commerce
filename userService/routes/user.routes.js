@@ -30,7 +30,6 @@ router.get('/healthCheck', healthCheck);
 
 
 
-// TODO: admin middleware
 /**
  * @swagger
  * /user:
@@ -120,7 +119,7 @@ router.patch(
         .withMessage('Phone number must be in the format 01xxxxxxxxx'),
         updateUser);
 
-router.delete('/:token', admin, deleteUser);
+router.delete('/:id', admin, deleteUser);
 
 // router.get('/getIdByToken/:token', getIdByToken);
 

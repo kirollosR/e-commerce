@@ -3,7 +3,7 @@ const repository = require('../repositories/user.repository');
 
 const deleteUser = async (req, res) => {
     try {
-        const userId = await repository.getIdByToken(req.params.token);
+        const userId = req.params.id;
         console.log(userId);
 
         const user = await User.findById(userId);
