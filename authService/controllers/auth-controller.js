@@ -107,7 +107,7 @@ register = async (req, res) => {
       })
       .catch(error => {
           if (error.response) {
-              res.status(403).json(error.response.data);
+              res.status(error.response.status).json(error.response.data);
           } else {
               console.error('Error:', error.message);
               res.status(500).json({ error: 'Internal server error' });
