@@ -7,7 +7,7 @@ const { body, validationResult } = require("express-validator")
 
 router.get('/', healthCheck);
 router.get('/getAllUsers', getAllUsers);
-router.get('/getIDbyToken/:token', getIDbyToken)
+router.get('/getIdByToken/:token', getIDbyToken)
 
 
 router.post(

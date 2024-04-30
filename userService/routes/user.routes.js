@@ -5,6 +5,7 @@ const addUser = require('../controllers/addUser.controller');
 const getAllUsers = require('../controllers/getAllUsers.controller');
 const getUserById = require('../controllers/getUserById.controller');
 const updateUser = require('../controllers/updateUser.controller');
+const getIdByToken = require('../controllers/getIdByToken.controller');
 
 
 const router = express.Router();
@@ -22,6 +23,8 @@ const router = express.Router();
 *         description: Successful response with a list of users.
 */
 router.get('/healthCheck', healthCheck);
+
+
 
 // TODO: admin middleware
 /**
@@ -117,6 +120,7 @@ router.patch(
 
 // TODO: delete user using delete by ID
 // TODO: get user by ID or Token
+router.get('/getIdByToken/:token', getIdByToken);
 
 // TODO: add admin middleware to the function
 router.get('/', getAllUsers);

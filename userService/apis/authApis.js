@@ -1,5 +1,9 @@
-import axios from 'axios';
+const axios = require('axios');
 
 const authApi = axios.create({
-    baseURL: 'http://localhost:5000/auth',
+    baseURL: 'http://auth-service:5000/auth',
 });
+
+const getIdByTokenApi = token => authApi.get(`/getIDbyToken/${token}`);
+
+module.exports = { getIdByTokenApi };

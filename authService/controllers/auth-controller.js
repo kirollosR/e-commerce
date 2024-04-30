@@ -78,11 +78,8 @@ register = async (req, res) => {
         const users = await User.find({username: req.body.username});
         if (users.length > 0) {
           return res.status(400).json({
-            errors: [
-              {
-                msg: "User already exists",
-              },
-            ],
+              success: false,
+              error: 'Username already exists',
           });
         }
   
@@ -96,18 +93,25 @@ register = async (req, res) => {
         phone: req.body.phone,
         token: crypto.randomBytes(16).toString("hex"), // JSON WEB TOKEN, CRYPTO -> RANDOM ENCRYPTION STANDARD
       };
-      
-    // 4- INSERT USER INTO AUTH DB
-    await addAuthentication(userData);
+    
+      // 4- INSERT USER OBJECT INTO USER DB
+      AddUser(userData)
+        .then(response => {
+          // console.log(response.data);
+          res.status(200).json( response.data );
+        })
+        .catch(error => {
+          if (error.response) {
+            // console.log(error.response.data);
+            res.status(403).json(error.response.data);
+          } else {
+            console.log('Error', error.message);
+          }
+        });
 
-    // 5- INSERT USER OBJECT INTO USER DB
-    try {
-        const userReturns = await AddUser(userData); // Call Kiro's addUser API
-    } catch (error) {    
-        console.error("Error adding user via API:", error);
-    }
-        res.status(200).json({ message:"User Added " , user: userReturns })
-        
+        // 5- INSERT USER INTO AUTH DB
+        await addAuthentication(userData);
+
       } catch (err) {
         res.status(500).json({ err: err });
       }
