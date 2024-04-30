@@ -1,7 +1,13 @@
+const repository = require('../repositories/user.repository');
+const User = require('../models/user.model');
+
 const admin = async (req, res, next) => {
     const {token} = req.headers;
-    const admin = await query("select * from user where token = ?", [token]);
-    if(admin[0] && admin[0].user_type_cd === 1){
+    const userId = await repository.getIdByToken(token);
+    const user = await User.findById(userId);
+    console.log(user);
+    // const admin = await query("select * from user where token = ?", [token]);
+    if(user.role === "admin"){
         next();
     } else {
         res.statusCode = 403;

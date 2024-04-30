@@ -8,6 +8,7 @@ const axios = require('axios');
 
 const { AddUser } = require('../apis/user-apis');
 
+
 getAllUsers = async (req, res) => {
     try{
         const users = await User.find({});
@@ -136,11 +137,8 @@ login = async (req, res) => {
       const user = await User.findOne({username: req.body.username});
       if (!user) {
         return res.status(400).json({
-          errors: [
-            {
-              msg: "User not found",
-            },
-          ],
+          success: false,
+          error: 'User not found',
         });
       }
       

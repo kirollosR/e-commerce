@@ -6,6 +6,8 @@ const getAllUsers = require('../controllers/getAllUsers.controller');
 const getUserById = require('../controllers/getUserById.controller');
 const updateUser = require('../controllers/updateUser.controller');
 const getIdByToken = require('../controllers/getIdByToken.controller');
+const deleteUser = require('../controllers/deleteUser.controller');
+const admin = require('../middleware/admin');
 
 
 const router = express.Router();
@@ -96,8 +98,6 @@ router.post(
         .withMessage('Phone number must be in the format 01xxxxxxxxx'),
      addUser);
 
-// TODO: update user using patch
-// router.patch('/updateUser/:id', updateUser);
 router.patch(
     '/:token',
     body('name')
@@ -118,12 +118,12 @@ router.patch(
         .withMessage('Phone number must be in the format 01xxxxxxxxx'),
         updateUser);
 
-// TODO: delete user using delete by ID
-// TODO: get user by ID or Token
+router.delete('/:token', deleteUser);
+
 router.get('/getIdByToken/:token', getIdByToken);
 
 // TODO: add admin middleware to the function
-router.get('/', getAllUsers);
+router.get('/', admin, getAllUsers);
 
 router.get('/getUserById/:id', getUserById);
 
