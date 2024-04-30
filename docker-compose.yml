@@ -20,7 +20,7 @@ services:
     volumes:
       - users-volume:/data/db
 
-  user_service:
+  user-service:
     build: ./userService
     container_name: ecommerce_user_service
     stdin_open: true
