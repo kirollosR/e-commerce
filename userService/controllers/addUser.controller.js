@@ -1,11 +1,9 @@
-const Repository = require('../repositories/user.repository');
+const repository = require('../repositories/user.repository');
 const { validationResult } = require('express-validator');
 const User = require('../models/user.model');
 
-const repository = new Repository();
 
-
-addUser = async (req, res) => {
+const addUser = async (req, res) => {
     try{
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -13,6 +11,11 @@ addUser = async (req, res) => {
         }
 
         const body = req.body;
+
+        // Disallow role to be set by the user
+        if (body.hasOwnProperty('role')) {
+            delete body.role;
+        }
 
         // Check if username already exists
         count = await repository.checkUsernameExists(body.username);

@@ -1,42 +1,29 @@
 const User = require('../models/user.model');
+const { getIdByTokenApi } = require('../apis/authApis');
 
-function userRepository() {
-    const checkUsernameExists = async (username) => {
-        count = await User.countDocuments({ username: username });
-        // console.log(count);
-        return count > 0 ? true : false;
-        
-    }
-
-    // const addUser = async (data, res) => {
-    //     const user = new User(data);
-    //     console.log(user);
-
-    //     if (!user) {
-    //         return res.status(400).json({ success: false, error: err });
-    //     }
-
-    //     await user
-    //         .save()
-    //         .then(() => {
-    //             return res.status(201).json({
-    //                 success: true,
-    //                 id: user._id,
-    //                 message: 'User created!',
-    //             });
-    //         })
-    //         .catch(error => {
-    //             return res.status(400).json({
-    //                 error,
-    //                 message: 'User not created!',
-    //             });
-    //         });
-    // };
-
-    return {
-        // addUser,
-        checkUsernameExists,
-    };
+const checkUsernameExists = async (username) => {
+    count = await User.countDocuments({ username: username });
+    // console.log(count);
+    return count > 0 ? true : false;
+    
 }
 
-module.exports = userRepository;
+const getIdByToken = async (token) => {
+    try {
+        const response = await getIdByTokenApi(token);
+        return response.data.userID;
+    } catch (error) {
+        if (error.response) {
+            throw { status: error.response.status, data: error.response.data };
+        } else {
+            console.log('Error', error.message);
+            throw { status: 500, message: "Auth service is under maintenance" };
+        }
+    }
+}
+
+
+module.exports = {
+    checkUsernameExists,
+    getIdByToken,
+};

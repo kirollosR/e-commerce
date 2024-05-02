@@ -3,8 +3,13 @@ const { body } = require("express-validator");
 const healthCheck = require('../controllers/healthCheck.controller');
 const addUser = require('../controllers/addUser.controller');
 const getAllUsers = require('../controllers/getAllUsers.controller');
-const getUserById = require('../controllers/getUserById.controller');
+const getUser = require('../controllers/getUser.controller');
 const updateUser = require('../controllers/updateUser.controller');
+const getIdByToken = require('../controllers/getIdByToken.controller');
+const deleteUser = require('../controllers/deleteUser.controller');
+const admin = require('../middleware/admin');
+const authorized = require('../middleware/authorized');
+
 
 
 const router = express.Router();
@@ -23,7 +28,8 @@ const router = express.Router();
 */
 router.get('/healthCheck', healthCheck);
 
-// TODO: admin middleware
+
+
 /**
  * @swagger
  * /user:
@@ -93,10 +99,8 @@ router.post(
         .withMessage('Phone number must be in the format 01xxxxxxxxx'),
      addUser);
 
-// TODO: update user using patch
-// router.patch('/updateUser/:id', updateUser);
 router.patch(
-    '/:id',
+    '/',
     body('name')
         .optional()
         .isString()
@@ -113,14 +117,15 @@ router.patch(
         .optional()
         .matches(/^01\d{9}$/)
         .withMessage('Phone number must be in the format 01xxxxxxxxx'),
+        authorized,
         updateUser);
 
-// TODO: delete user using delete by ID
-// TODO: get user by ID or Token
+router.delete('/:id', admin, deleteUser);
 
-// TODO: add admin middleware to the function
-router.get('/', getAllUsers);
+// router.get('/getIdByToken/:token', getIdByToken);
 
-router.get('/getUserById/:id', getUserById);
+router.get('/', admin, getAllUsers);
+
+router.get('/getUser/', authorized, getUser);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const User = require('../models/user.model');
 
-getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
     try{
         const users = await User.find();
         if(!users){
@@ -12,9 +12,9 @@ getAllUsers = async (req, res) => {
             users_count: users.length,
             users,
         });
-    } catch (error){
-        res.statusCode = 500;
-        res.send({ message: error });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(error.status || 500).json(error.data || { error });
     }
 }
 
