@@ -23,15 +23,13 @@ const updateUser = async (req, res) => {
             });
         }
 
-         // TODO: check if user want to update username if yes check if the new username is already taken
-
         Object.keys(data).forEach(key => {
             if (key === 'username') {
                 return res.status(400).json({   
                     success: false,
                     error: 'You cannot update your username',
                 });
-            }else {
+            } else {
                 user[key] = data[key];
             }
             

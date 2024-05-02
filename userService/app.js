@@ -4,7 +4,7 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 
-// const swaggerAutogen = require('swagger-autogen')();
+const swaggerAutogen = require('swagger-autogen')();
 
 const db = require('./config/db');
 // const db = require('./config/db_mongoDb');

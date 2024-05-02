@@ -11,7 +11,7 @@
 //       description: '',
 //   },
 //   tags: [ ],
-//   host: 'localhost:3000/api',
+//   host: 'localhost:5001/user',
 //   schemes: ['http', 'https'],
 // };
 

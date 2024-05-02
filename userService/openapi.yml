@@ -29,6 +29,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/addUserResponse'
+        '403':
+          $ref: '#/components/responses/usernameExist'
+        '400':
+          $ref: '#/components/responses/validation'
+          
 
 components:
   schemas:
@@ -62,6 +67,52 @@ components:
         message:
           type: string
           example: User created!
+    validationArray:
+      type: object
+      properties:
+        type: 
+          type: string
+          example: field
+        value:
+          type: string
+          example: 0123456789
+        msg:
+          type: string
+          example: Phone number must be in the format 01xxxxxxxxx"
+        path:
+          type: string
+          example: phone
+        location:
+          type: string
+          example: body
+
+  responses:
+    usernameExist:
+      description: Username already exist
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success: 
+                type: boolean
+                example: false
+              error:
+                type: string
+                example: Username already exists
+    validation:
+      description: ''
+      content:
+        application/json:
+          schema: 
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/components/schemas/validationArray'
+
+  
           
 
 
