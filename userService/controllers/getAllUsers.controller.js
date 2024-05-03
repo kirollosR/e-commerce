@@ -3,14 +3,26 @@ const User = require('../models/user.model');
 const getAllUsers = async (req, res) => {
     try{
         const users = await User.find();
-        if(!users){
+        console.log(users);
+        if(users.length === 0 || !users){
             return res.status(404).json({
-                message: 'No users found',
+                error: 'No users found',
             });
         }
         res.status(200).json({
             users_count: users.length,
-            users,
+            // users,
+            users: users.map(user => {
+                return {
+                    id: user._id,
+                    username: user.username,
+                    name: user.name,
+                    role: user.role,
+                    email: user.email,
+                    phone: user.phone,
+                    address: user.address,
+                };
+            })
         });
     } catch (error) {
         console.error('Error:', error);

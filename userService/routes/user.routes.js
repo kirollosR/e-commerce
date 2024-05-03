@@ -124,7 +124,7 @@ router.delete('/:id', admin, deleteUser);
 
 // router.get('/getIdByToken/:token', getIdByToken);
 
-router.get('/', admin, getAllUsers);
+router.get('/', getAllUsers);
 
 router.get('/getUser/', authorized, getUser);
 
