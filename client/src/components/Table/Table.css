@@ -1,0 +1,12 @@
+.scrollableDiv {
+    height: 300px;
+    overflow-y: auto;
+    display: block;
+  }
+
+  .stickyHeader {
+    position: sticky;
+    top: 0;
+    background-color: white;
+
+  }

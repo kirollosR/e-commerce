@@ -22,6 +22,7 @@ import Offer from "./pages/Offer/Offer";
 import Payment from "./pages/payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Shop from "./pages/Shop/Shop";
+import Users from "./pages/Users/Users";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminHome from "./pages/Admin/AdminHome/AdminHome";
@@ -53,6 +54,32 @@ const Layout = () => {
     </div>
   );
 };
+
+const Admin = () => {
+  return (
+    <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <Header />
+      
+      
+      <ScrollRestoration />
+      <Outlet />
+      <Footer />
+      <FooterBottom />
+    </div>
+  );
+};
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
@@ -70,9 +97,15 @@ const router = createBrowserRouter(
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
+        {/* <Route path="/users" element={<Users />}></Route> */}
       </Route>
+      <Route path="admin" element={<Admin />}>
+        <Route path="users" element={<Users />}></Route>
+      </Route>
+        
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
+      
     </Route>
   )
 );
