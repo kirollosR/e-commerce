@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const Table3 = ({ data, canAdd = false, pageName, canEdit = false }) => {
+export const Table3 = ({ data=[], canAdd = false, pageName, canEdit = false }) => {
   const [sortBy, setSortBy] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
@@ -191,32 +191,34 @@ export const Table3 = ({ data, canAdd = false, pageName, canEdit = false }) => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-              {paginatedUsers.map((element) => (
+              {paginatedUsers.map((element, index) => (
                 <tr key={element.id}>
                   {columns.map((column) => (
-                    <td class="px-5 py-4">{element[column.key]}</td>
+                    <td class="px-5 py-4">
+                      {column.key === "id" ? index + 1 : element[column.key]}
+                    </td>
                   ))}
                   <td>
-                  <div class="group">
-                    <button class="px-1 py-1 cursor-pointer active:scale-[.97] group-hover:bg-red-500 rounded-lg text-[15px]">
-                      <svg
-                        class="w-6 h-6 text-red-500 group-hover:text-white dark:text-white"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                        />
-                      </svg>
-                    </button>
+                    <div class="group">
+                      <button class="px-1 py-1 cursor-pointer active:scale-[.97] group-hover:bg-red-500 rounded-lg text-[15px]">
+                        <svg
+                          class="w-6 h-6 text-red-500 group-hover:text-white dark:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                          />
+                        </svg>
+                      </button>
                     </div>
                   </td>
                 </tr>

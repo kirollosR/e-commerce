@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../apis/authApis";
 
 const SignUp = () => {
@@ -19,7 +18,7 @@ const SignUp = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [checked, setChecked] = useState(false);
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const handleUsername = (e) => {
     setUsername(e.target.value);
@@ -74,7 +73,7 @@ const SignUp = () => {
         setPhone("");
 
         // Redirect to the home page
-        history.push("/");
+        navigate("/");
 
       } catch (error) {
         console.error("Registration failed:", error.response.data);
@@ -82,7 +81,7 @@ const SignUp = () => {
       }
     }
   };
-
+  
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-full lgl:w-[500px] h-full">
@@ -217,7 +216,7 @@ const SignUp = () => {
                 </div>
                 <button
                   onClick={handleSignUp}
-                  className={'bg-primeColor hover:bg-black hover:text-white cursor-pointer w-full text-gray-200 text-base font-medium h-10 rounded-md duration-300'}
+                  className={"bg-primeColor hover:bg-black hover:text-white cursor-pointer w-full text-gray-200 text-base font-medium h-10 rounded-md duration-300"}
                 >
                   Create Account
                 </button>
@@ -236,6 +235,7 @@ const SignUp = () => {
       </div>
     </div>
   );
+  
 };
 
-export default SignUp;
+export default SignUp;

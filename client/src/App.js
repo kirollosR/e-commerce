@@ -68,7 +68,7 @@ const Admin = () => {
         theme="colored"
       />
       <Header />
-      <HeaderBottom />
+      
       
       <ScrollRestoration />
       <Outlet />
