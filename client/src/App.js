@@ -24,6 +24,8 @@ import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Shop from "./pages/Shop/Shop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminHome from "./pages/Admin/AdminHome/AdminHome";
+import Profile from "./pages/Profile/Profile";
 
 const Layout = () => {
   return (
@@ -45,6 +47,7 @@ const Layout = () => {
       <SpecialCase />
       <ScrollRestoration />
       <Outlet />
+
       <Footer />
       <FooterBottom />
     </div>
@@ -61,6 +64,8 @@ const router = createBrowserRouter(
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/journal" element={<Journal />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
+        <Route path="/profile" element={<Profile/>}></Route>
+        <Route path="/admin-home" element={<AdminHome />}></Route>
         <Route path="/category/:category" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
