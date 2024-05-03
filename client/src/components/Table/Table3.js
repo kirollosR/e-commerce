@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export const Table3 = ({ data, canAdd, pageName }) => {
+export const Table3 = ({ data, canAdd = false, pageName, canEdit = false }) => {
   const [sortBy, setSortBy] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,7 +82,9 @@ export const Table3 = ({ data, canAdd, pageName }) => {
     <div class="bg-white p-8 rounded-md w-full">
       <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
         <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-            <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">{pageName}s List:</h2>
+          <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+            {pageName}s List:
+          </h2>
           <div class="w-full md:w-1/4">
             <form class="flex items-center">
               <label for="simple-search" class="sr-only">
@@ -117,6 +119,32 @@ export const Table3 = ({ data, canAdd, pageName }) => {
             </form>
           </div>
           <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+            {canEdit && (
+              <button
+                type="button"
+                class="flex items-center text-primary-700 hover:text-white border border-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:border-primary-500 dark:text-primary-500 dark:hover:text-white dark:hover:bg-primary-500 dark:focus:ring-primary-800"
+              >
+                <svg
+                  class="w-6 h-6 "
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                  />
+                </svg>
+
+                <p class="">edit {pageName}</p>
+              </button>
+            )}
             {canAdd && (
               <button
                 type="button"
@@ -169,9 +197,10 @@ export const Table3 = ({ data, canAdd, pageName }) => {
                     <td class="px-5 py-4">{element[column.key]}</td>
                   ))}
                   <td>
-                    <button class="px-1 py-1 cursor-pointer active:scale-[.97] hover:bg-red-500 text-white rounded-lg text-[15px]">
+                  <div class="group">
+                    <button class="px-1 py-1 cursor-pointer active:scale-[.97] group-hover:bg-red-500 rounded-lg text-[15px]">
                       <svg
-                        class="w-6 h-6 text-red-500 hover:text-white dark:text-white"
+                        class="w-6 h-6 text-red-500 group-hover:text-white dark:text-white"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -188,6 +217,7 @@ export const Table3 = ({ data, canAdd, pageName }) => {
                         />
                       </svg>
                     </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -213,17 +243,25 @@ export const Table3 = ({ data, canAdd, pageName }) => {
             </div>
             <div class="inline-flex mt-2 xs:mt-0">
               <button
-                onClick={() => handleChangePage(currentPage - 1)}
+                onClick={() => {
+                  if (handleChangePage && currentPage) {
+                    handleChangePage(currentPage - 1);
+                  }
+                }}
                 disabled={currentPage === 1}
-                class="px-3 py-1 shadow-lg shadow-gray-500/50 bg-black text-white rounded-lg text-[15px] cursor-pointer active:scale-[.97]"
+                class="px-3 py-1 shadow-lg shadow-gray-500/50 bg-primary-950 text-white rounded-lg text-[15px] cursor-pointer active:scale-[.97]"
               >
                 Previous
               </button>
               &nbsp; &nbsp;
               <button
-                onClick={() => handleChangePage(currentPage + 1)}
-                disabled={endIndex >= sortedUsers.length}
-                class="px-3 py-1 shadow-lg shadow-gray-500/50 bg-black text-white rounded-lg text-[15px] cursor-pointer active:scale-[.97]"
+                onClick={() => {
+                  if (handleChangePage && currentPage) {
+                    handleChangePage(currentPage + 1);
+                  }
+                }}
+                disabled={endIndex >= (sortedUsers ? sortedUsers.length : 0)}
+                class="px-3 py-1 shadow-lg shadow-gray-500/50 bg-primary-950 text-white rounded-lg text-[15px] cursor-pointer active:scale-[.97]"
               >
                 Next
               </button>

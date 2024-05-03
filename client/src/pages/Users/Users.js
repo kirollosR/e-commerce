@@ -59,7 +59,7 @@ const Users = () => {
         {/* <div className="flex justify-center items-center h-screen"> */}
             {/* <input type="text" placeholder="Search" className="border-2 border-gray-300 p-2 rounded-lg" /> */}
             {/* <Table2 /> */}
-            <Table3 data={users} canAdd={true} pageName={"User"} />
+            <Table3 data={users} canAdd={true} pageName={"User"} canEdit={true} />
             {/* <UserTable users={users} /> */}
             <Table4 users={users} />
             
