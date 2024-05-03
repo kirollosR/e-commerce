@@ -51,6 +51,32 @@ const Layout = () => {
     </div>
   );
 };
+
+const Admin = () => {
+  return (
+    <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <Header />
+      <HeaderBottom />
+      
+      <ScrollRestoration />
+      <Outlet />
+      <Footer />
+      <FooterBottom />
+    </div>
+  );
+};
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
@@ -66,8 +92,12 @@ const router = createBrowserRouter(
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
-        <Route path="/users" element={<Users />}></Route>
+        {/* <Route path="/users" element={<Users />}></Route> */}
       </Route>
+      <Route path="admin" element={<Admin />}>
+        <Route path="users" element={<Users />}></Route>
+      </Route>
+        
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
       
