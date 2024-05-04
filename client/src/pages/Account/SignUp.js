@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { BsCheckCircleFill } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import { logoLight } from "../../assets/images";
 import { register } from "../../apis/authApis"; // Import the register function from your authApis file
+import { setAuthUser } from "../../helper/Storage";
+
 
 const SignUp = () => {
   const navigate = useNavigate(); // Hook for navigation
@@ -72,6 +72,7 @@ const SignUp = () => {
 
       // If registration successful, navigate to home page
       if (response.status === 200) {
+        setAuthUser(response.data)
         navigate("/"); // Navigate to home page
       }
     } catch (error) {
@@ -235,4 +236,4 @@ const SignUp = () => {
   
 };
 
-export default SignUp;
+export default SignUp;
