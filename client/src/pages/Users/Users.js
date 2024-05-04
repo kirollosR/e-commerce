@@ -101,9 +101,14 @@ const Users = () => {
       })
       .catch((error) => {
         console.error("Failed to delete user:", error);
+        setData({
+          ...data,
+          error:
+            error?.response?.data?.error ||
+            "The User service is under maintenance",
+        });
       });
-  }
-
+  };
 
   return (
     <div className="mt-3 mb-3">

@@ -16,7 +16,6 @@ const SignUp = () => {
   const [errAddress, setErrAddress] = useState("");
   const [errPhone, setErrPhone] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const [checked, setChecked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -53,32 +52,30 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    if (checked) {
-      try {
-        const response = await register({
-          username,
-          name,
-          email,
-          password,
-          address,
-          phone,
-        });
+    try {
+      const response = await register({
+        username,
+        name,
+        email,
+        password,
+        address,
+        phone,
+      });
 
-        setSuccessMsg(response.data.message);
-        setUsername("");
-        setName("");
-        setEmail("");
-        setPassword("");
-        setAddress("");
-        setPhone("");
+      setSuccessMsg(response.data.message);
+      setUsername("");
+      setName("");
+      setEmail("");
+      setPassword("");
+      setAddress("");
+      setPhone("");
 
-        // Redirect to the home page
-        navigate("/");
+      // Redirect to the home page
+      navigate("/");
 
-      } catch (error) {
-        console.error("Registration failed:", error.response.data);
-        setSuccessMsg(error.response.data.error);
-      }
+    } catch (error) {
+      console.error("Registration failed:", error.response.data);
+      setSuccessMsg(error.response.data.error);
     }
   };
   
@@ -238,4 +235,4 @@ const SignUp = () => {
   
 };
 
-export default SignUp;
+export default SignUp;
