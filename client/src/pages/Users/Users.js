@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Table2 } from "../../components/Table/Table2";
 import { Table3 } from "../../components/Table/Table3";
 import Table4 from "../../components/Table/Table4";
-import userApis from "../../apis/userApi"; // replace with the actual path to your userApi file
+import userApis from "../../apis/userApis"; // replace with the actual path to your userApi file
 
 // const fetchData = async () => {
 //   try {
@@ -90,27 +90,23 @@ const Users = () => {
   }, []);
   console.log("error: ", data.error);
   console.log(data.result);
-  // const transformedData = data.result.map((user, index) => {
-  //   return {
-  //     id: user._id,
-  //     username: user.username,
-  //     name: user.name,
-  //     email: user.email,
-  //     address: user.address,
-  //     phone: user.phone
-  //   };
-  // });
 
-  // console.log(transformedData);
+  const deleteHandler = async (id) => {
+    await userApis
+      .deleteUser(id)
+      .then((response) => {
+        console.log(response.data);
+        setData({ ...data, reload: data.reload + 1 });
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Failed to delete user:", error);
+      });
+  }
 
-  // const users = generateUsers(50);
-  // console.log(users);
 
   return (
     <div className="mt-3 mb-3">
-      {/* <div className="flex justify-center items-center h-screen"> */}
-      {/* <input type="text" placeholder="Search" className="border-2 border-gray-300 p-2 rounded-lg" /> */}
-      {/* <Table2 /> */}
       {data.loading && (
         <div className="flex justify-center">
           <div role="status">
@@ -176,14 +172,12 @@ const Users = () => {
       {!data.error && !data.loading && (
         <Table3
           data={data.result}
-          canAdd={true}
+          canAdd={false}
           pageName={"User"}
           canEdit={false}
+          deleteHandler={deleteHandler}
         />
       )}
-      {/* <Table3 data={data.result} canAdd={true} pageName={"User"} canEdit={false} /> */}
-      {/* <UserTable users={users} /> */}
-      {/* <Table4 users={users} /> */}
     </div>
   );
 };

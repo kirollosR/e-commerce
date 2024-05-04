@@ -120,7 +120,7 @@ router.patch(
         authorized,
         updateUser);
 
-router.delete('/:id', admin, deleteUser);
+router.delete('/:id', deleteUser);
 
 // router.get('/getIdByToken/:token', getIdByToken);
 

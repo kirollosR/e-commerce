@@ -5,11 +5,13 @@ const userApi = axios.create({
 });
 
 export const getUsers = () => userApi.get('/');
+export const deleteUser = id => userApi.delete(`/${id}`);
 // export const countLetters = paragraph => task2Api.post('/countletters', { paragraph });
 // export const writecharacter = paragraph => task2Api.post('/writecharacters', { paragraph });
 
 const apis = {
     getUsers,
+    deleteUser,
     // countLetters,
     // writecharacter,
 }
