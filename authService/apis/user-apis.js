@@ -5,5 +5,7 @@ const userApi = axios.create({
 });
 
 const AddUser = userData => userApi.post('/',  userData );
+const getUser = token => userApi.get(`/getUserData/${token}`);
 
-module.exports = { AddUser };
+module.exports = { AddUser
+                ,getUser};

@@ -37,6 +37,7 @@ const addUser = async (req, res) => {
                 return res.status(201).json({
                     success: true,
                     id: user._id,
+                    role: user.role,
                     message: 'User created!',
                 });
             })
