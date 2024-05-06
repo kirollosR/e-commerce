@@ -28,6 +28,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AdminHome from "./pages/Admin/AdminHome/AdminHome";
 import Profile from "./pages/Profile/Profile";
 import AdminHeader from "./components/Admin/AdminHeader/AdminHeader";
+import AddCategoryForm from "./components/Admin/AddCategory/AddCategoryForm";
 
 const Layout = () => {
   return (
@@ -93,6 +94,7 @@ const router = createBrowserRouter(
         <Route path="/journal" element={<Journal />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/add-category" element={<AddCategoryForm />}></Route>
         <Route path="/admin-home" element={<AdminHome />}></Route>
         <Route path="/category/:category" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
