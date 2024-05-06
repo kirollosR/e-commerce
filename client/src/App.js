@@ -29,6 +29,7 @@ import AdminHome from "./pages/Admin/AdminHome/AdminHome";
 import Profile from "./pages/Profile/Profile";
 import AdminHeader from "./components/Admin/AdminHeader/AdminHeader";
 import AddCategoryForm from "./components/Admin/AddCategory/AddCategoryForm";
+import EditProfile from "./pages/Profile/EditProfile";
 
 const Layout = () => {
   return (
@@ -93,6 +94,7 @@ const router = createBrowserRouter(
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/journal" element={<Journal />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
+        <Route path="/edit-profile" element={<EditProfile />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/add-category" element={<AddCategoryForm />}></Route>
         <Route path="/admin-home" element={<AdminHome />}></Route>
