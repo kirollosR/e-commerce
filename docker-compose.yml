@@ -32,20 +32,38 @@ services:
       - ./userService:/app
       - /app/node_modules
 
-    categoryService:
-      build: ./categoryService
-      container_name: ecommerce_category_Service
-      stdin_open: true
-      ports:
-        - "5003:5003"
-      networks:
-        - my-app
-      volumes:
-        - ./categoryService:/app
-        - /app/__pycache__
+  categories_servise:
+    build: ./categories_servise
+    container_name: categories_container
+    stdin_open: true
+    ports:
+      - "5003:5003"
+    networks:
+      - my-app
+    links:
+      - category_db
+    restart: on-failure
+    depends_on:
+      - category_db
+    volumes:
+      - ./categories_servise:/app
+      - /app/__pycache__
 
+  category_db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    networks:
+      - my-app
+    volumes:
+      - category-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: category_database
 volumes:
   users-volume:
+    driver: local
+  category-volume:
     driver: local
 
 networks:

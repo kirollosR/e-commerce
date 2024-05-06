@@ -1,10 +1,11 @@
-FROM python:3.10-slim
+FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY . /app
-
 RUN pip install --no-cache-dir fastapi uvicorn
+RUN pip install mysql-connector-python
+
+COPY main.py ./
 
 EXPOSE 5003
 
