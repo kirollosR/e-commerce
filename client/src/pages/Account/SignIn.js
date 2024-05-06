@@ -108,7 +108,9 @@ const SignIn = () => {
 
               {/* Error Message */}
               {errorMsg && (
-                <p className="text-red-500 text-sm text-center mb-4">{errorMsg}</p>
+                <p className="text-red-500 text-sm text-center mb-4">
+                  {errorMsg}
+                </p>
               )}
 
               <button
@@ -120,7 +122,9 @@ const SignIn = () => {
               <p className="text-sm text-center font-titleFont font-medium">
                 Don't have an Account?{" "}
                 <Link to="/signup">
-                  <span className="hover:text-blue-600 duration-300">Sign up</span>
+                  <span className="hover:text-blue-600 duration-300">
+                    Sign up
+                  </span>
                 </Link>
               </p>
             </div>
