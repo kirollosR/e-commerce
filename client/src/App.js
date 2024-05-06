@@ -27,6 +27,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminHome from "./pages/Admin/AdminHome/AdminHome";
 import Profile from "./pages/Profile/Profile";
+import AdminHeader from "./components/Admin/AdminHeader/AdminHeader";
+import AddCategoryForm from "./components/Admin/AddCategory/AddCategoryForm";
+import EditProfile from "./pages/Profile/EditProfile";
 
 const Layout = () => {
   return (
@@ -70,10 +73,10 @@ const Admin = () => {
         pauseOnHover
         theme="colored"
       />
-      <Header />
+      <AdminHeader />
       
       
-      <ScrollRestoration />
+      {/* <ScrollRestoration /> */}
       <Outlet />
       <Footer />
       <FooterBottom />
@@ -83,7 +86,7 @@ const Admin = () => {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Admin />}>
         {/* ==================== Header Navlink Start here =================== */}
         <Route index element={<Home />}></Route>
         <Route path="/shop" element={<Shop />}></Route>
@@ -91,7 +94,9 @@ const router = createBrowserRouter(
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/journal" element={<Journal />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
-        <Route path="/profile" element={<Profile/>}></Route>
+        <Route path="/edit-profile" element={<EditProfile />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/add-category" element={<AddCategoryForm />}></Route>
         <Route path="/admin-home" element={<AdminHome />}></Route>
         <Route path="/category/:category" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
