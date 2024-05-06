@@ -6,7 +6,7 @@ const crypto = require("crypto");
 const axios = require("axios");
 // rest of your code
 
-const { AddUser } = require("../apis/user-apis");
+const { AddUser, getUser } = require("../apis/user-apis");
 
 getAllUsers = async (req, res) => {
   try {
@@ -78,6 +78,8 @@ register = async (req, res) => {
       });
     }
 
+    // const userRole1 = response.data.role;
+    // console.log(userRole1)
     // 3- PREPARE OBJECT USER TO -> SAVE
     const userData = {
       username: req.body.username,
@@ -91,32 +93,38 @@ register = async (req, res) => {
 
     // 4- INSERT USER OBJECT INTO USER DB
     AddUser(userData)
-      .then((response) => {
-        const userID = response.data.id; // Extract ID from the response
-        const objectId = mongoose.Types.ObjectId(userID); // Convert ID to ObjectId
-        return addAuthentication({
-          _id: objectId,
-          username: userData.username,
-          password: userData.password,
-          token: userData.token,
-        });
-      })
-      .then(() => {
-        res
-          .status(200)
-          .json({ message: "User added successfully", user: userData });
-      })
-      .catch((error) => {
-        if (error.response) {
-          res.status(error.response.status).json(error.response.data);
-        } else {
-          console.error("Error:", error.message);
-          res.status(500).json({
-            success: false,
-            error: "User service is under maintaince",
-          });
-        }
+    .then((response) => {
+      const userID = response.data.id;
+      const userRole = response.data.role;
+      console.log(userRole);
+      const objectId = mongoose.Types.ObjectId(userID);
+      return addAuthentication({
+        _id: objectId,
+        username: userData.username,
+        password: userData.password,
+        token: userData.token,
+      }).then(() => {
+        // Add role to userData
+        userData.role = userRole;
+        return userData; // Pass userData to the next then block
       });
+    })
+    .then((userData) => { // Receive userData from the previous then block
+      res
+        .status(200)
+        .json({ message: "User added successfully", user: userData });
+    })
+    .catch((error) => {
+      if (error.response) {
+        res.status(error.response.status).json(error.response.data);
+      } else {
+        console.error("Error:", error.message);
+        res.status(500).json({
+          success: false,
+          error: "User service is under maintenance",
+        });
+      }
+    });
   } catch (err) {
     res.status(500).json({ err: err });
   }
@@ -145,8 +153,14 @@ login = async (req, res) => {
       user.password
     );
     if (checkPassword) {
-      // delete user.password;
-      res.status(200).json({ message: "Login successful", token: user.token });
+      // Fetch user ID by token
+      const response = await getUser(user.token);
+      console.log(response)
+      const userData = response.data.user;
+      console.log(userData)
+
+      // Send response with role
+      res.status(200).json({ message: "Login successful", token: user.token, role: userData.role });
     } else {
       return res.status(400).json({
         errors: [
@@ -164,3 +178,43 @@ login = async (req, res) => {
 module.exports = { getAllUsers, healthCheck, login, getIDbyToken, register };
 
 //  TODO: Token --> ID or Username
+
+
+// login = async (req, res) => {
+//   try {
+//     // 1- VALIDATION REQUEST
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+
+//     // 2- CHECK IF USERNAME EXISTS
+//     const user = await User.findOne({ username: req.body.username });
+//     if (!user) {
+//       return res.status(401).json({
+//         success: false,
+//         error: "User not found",
+//       });
+//     }
+
+//     // 3- COMPARE HASHED PASSWORD
+//     const checkPassword = await bcrypt.compare(
+//       req.body.password,
+//       user.password
+//     );
+//     if (checkPassword) {
+//       // delete user.password;
+//       res.status(200).json({ message: "Login successful", token: user.token });
+//     } else {
+//       return res.status(400).json({
+//         errors: [
+//           {
+//             msg: "Invalid password",
+//           },
+//         ],
+//       });
+//     }
+//   } catch (err) {
+//     res.status(500).json({ err: err });
+//   }
+// };

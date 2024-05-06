@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { BsCheckCircleFill } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import { logoLight } from "../../assets/images";
 import { login } from "../../apis/authApis"; // Import the login function from your authApis file
+import { setAuthUser } from "../../helper/Storage";
 
 const SignIn = () => {
   const navigate = useNavigate(); // Hook for navigation
@@ -33,14 +32,14 @@ const SignIn = () => {
     }
 
     if (!password) {
-      setErrPassword("Create a password");
+      setErrPassword("Enter your password");
       return;
     }
 
     try {
       const response = await login(email, password); // Call login API
-      // If login successful, navigate to home page
       if (response.status === 200) {
+        setAuthUser(response.data)
         navigate("/"); // Navigate to home page
       }
     } catch (error) {
@@ -48,11 +47,13 @@ const SignIn = () => {
       if (error.response) {
         if (error.response.status === 401) {
           setErrorMsg("Invalid username or password. Please try again."); // Handle 401 Unauthorized error
-        } else {
+        } else if (error.response.data) {
           setErrorMsg(error.response.data.error); // Handle other errors
+        } else {
+          setErrorMsg("An unknown error occurred."); // Handle case where error.response.data is undefined
         }
       } else {
-        setErrorMsg("An unexpected error occurred. Please try again.");
+        setErrorMsg("An unknown error occurred."); // Handle case where error.response is undefined
       }
     }
   };
@@ -76,7 +77,7 @@ const SignIn = () => {
                   value={email}
                   className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   type="email"
-                  placeholder="john@workemail.com"
+                  placeholder="username"
                 />
                 {errEmail && (
                   <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -96,7 +97,7 @@ const SignIn = () => {
                   value={password}
                   className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                   type="password"
-                  placeholder="Create password"
+                  placeholder="password"
                 />
                 {errPassword && (
                   <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
