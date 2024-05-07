@@ -63,8 +63,8 @@ services:
       - ./userService:/app
       - /app/node_modules
 
-  categoryService:
-    build: ./categoryService
+  categoryservice:
+    build: ./categoryservice
     container_name: ecommerce_category_Service
     stdin_open: true
     ports:
