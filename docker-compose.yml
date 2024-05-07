@@ -63,6 +63,30 @@ services:
       - ./userService:/app
       - /app/node_modules
 
+  categoryService:
+    build: ./categoryService
+    container_name: ecommerce_category_Service
+    stdin_open: true
+    ports:
+      - "5003:5003"
+    networks:
+      - e-commerce-app
+    volumes:
+      - ./categoryService:/app
+      - /app/__pycache__
+
+  category_db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    networks:
+      - my-app
+    volumes:
+      - category-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: category_database
+
 networks:
   e-commerce-app:
     driver: bridge
@@ -70,4 +94,6 @@ volumes:
   auth-volume:
     driver: local
   users-volume:
+    driver: local
+  category-volume:
     driver: local
