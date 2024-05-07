@@ -4,7 +4,6 @@ const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const axios = require("axios");
-// rest of your code
 
 const { AddUser, getUser } = require("../apis/user-apis");
 
@@ -78,8 +77,6 @@ register = async (req, res) => {
       });
     }
 
-    // const userRole1 = response.data.role;
-    // console.log(userRole1)
     // 3- PREPARE OBJECT USER TO -> SAVE
     const userData = {
       username: req.body.username,
@@ -106,10 +103,10 @@ register = async (req, res) => {
       }).then(() => {
         // Add role to userData
         userData.role = userRole;
-        return userData; // Pass userData to the next then block
+        return userData;
       });
     })
-    .then((userData) => { // Receive userData from the previous then block
+    .then((userData) => {
       res
         .status(200)
         .json({ message: "User added successfully", user: userData });
@@ -163,11 +160,8 @@ login = async (req, res) => {
       res.status(200).json({ message: "Login successful", token: user.token, role: userData.role });
     } else {
       return res.status(400).json({
-        errors: [
-          {
-            msg: "Invalid password",
-          },
-        ],
+        success: false,
+        error: "You entered a wrong password, Please try again",
       });
     }
   } catch (err) {
@@ -176,9 +170,6 @@ login = async (req, res) => {
 };
 
 module.exports = { getAllUsers, healthCheck, login, getIDbyToken, register };
-
-//  TODO: Token --> ID or Username
-
 
 // login = async (req, res) => {
 //   try {
