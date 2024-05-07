@@ -28,7 +28,7 @@ import Users from "./pages/Users/Users";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminHome from "./pages/Admin/AdminHome/AdminHome";
-import Profile from "./pages/Profile/Profile";
+import ProfilePage from "./pages/Profile/ProfilePage";
 
 import { getAuthenticatedUser } from "./helper/Storage";
 import AdminHeader from "./components/Admin/AdminHeader/AdminHeader";
@@ -150,7 +150,7 @@ const router = createBrowserRouter(
         
         <Route
           path="/profile"
-          element={<ProtectedRoute element={<Profile />} redirectTo="/signin" />}
+          element={<ProtectedRoute element={<ProfilePage />} redirectTo="/signin" />}
         />
         {/* <Route
           path="/users"

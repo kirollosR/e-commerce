@@ -126,7 +126,7 @@ const Users = () => {
       {data.error && (
         <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
           <div
-            class="flex justify-center items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 md:w-1/4"
+            class="flex justify-center items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 md:w-5/6"
             role="alert"
           >
             <svg
@@ -145,7 +145,7 @@ const Users = () => {
           </div>
           <button
             type="button"
-            class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 w-1/6"
           >
             <svg
               class="h-5 w-5 mr-3"
@@ -165,7 +165,7 @@ const Users = () => {
       {!data.error && !data.loading && (
         <Table3
           data={data.result}
-          canAdd={false}
+          canAdd={true}
           pageName={"User"}
           canEdit={false}
           deleteHandler={deleteHandler}
