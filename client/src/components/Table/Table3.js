@@ -85,22 +85,22 @@ export const Table3 = ({
   // Apply pagination
   const paginatedUsers = sortedUsers.slice(startIndex, endIndex);
   return (
-    <div class="bg-white p-8 rounded-md w-full">
-      <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-        <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-          <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+    <div className="bg-white p-8 rounded-md w-full">
+      <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+        <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+          <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
             {pageName} List:
           </h2>
-          <div class="w-full md:w-1/4">
-            <form class="flex items-center">
-              <label for="simple-search" class="sr-only">
+          <div className="w-full md:w-1/4">
+            <form className="flex items-center">
+              <label for="simple-search" className="sr-only">
                 Search
               </label>
-              <div class="relative w-full">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <div className="relative w-full">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <svg
                     aria-hidden="true"
-                    class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
                     fill="currentColor"
                     viewbox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@ export const Table3 = ({
                 <input
                   type="text"
                   id="simple-search"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   value={searchTerm}
                   onChange={handleSearch}
                   placeholder="Search..."
@@ -124,14 +124,14 @@ export const Table3 = ({
               </div>
             </form>
           </div>
-          <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+          <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
             {canEdit && (
               <button
                 type="button"
-                class="flex items-center text-primary-700 hover:text-white border border-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:border-primary-500 dark:text-primary-500 dark:hover:text-white dark:hover:bg-primary-500 dark:focus:ring-primary-800"
+                className="flex items-center text-primary-700 hover:text-white border border-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:border-primary-500 dark:text-primary-500 dark:hover:text-white dark:hover:bg-primary-500 dark:focus:ring-primary-800"
               >
                 <svg
-                  class="w-6 h-6 "
+                  className="w-6 h-6 "
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -141,23 +141,23 @@ export const Table3 = ({
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
                   />
                 </svg>
 
-                <p class="">edit {pageName}</p>
+                <p className="">edit {pageName}</p>
               </button>
             )}
             {canAdd && (
               <button
                 type="button"
-                class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
               >
                 <svg
-                  class="h-5 w-5 mr-3"
+                  className="h-5 w-5 mr-3"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
@@ -172,14 +172,14 @@ export const Table3 = ({
             )}
           </div>
         </div>
-        <div class="overflow-x-auto">
+        <div className="overflow-x-auto">
           <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 {columns.map((column) => (
                   <th
                     scope="col"
-                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer"
+                    className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer"
                     onClick={() => handleSort(column.key)}
                   >
                     {column.name}
@@ -192,7 +192,7 @@ export const Table3 = ({
                 ))}
                 <th
                   scope="col"
-                  class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+                  className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
                 ></th>
               </tr>
             </thead>
@@ -200,18 +200,18 @@ export const Table3 = ({
               {paginatedUsers.map((element, index) => (
                 <tr key={element.id}>
                   {columns.map((column) => (
-                    <td class="px-5 py-4">
+                    <td className="px-5 py-4">
                       {column.key === "id" ? index + 1 : element[column.key]}
                     </td>
                   ))}
                   <td>
-                    <div class="group">
+                    <div className="group">
                       <button
-                        class="px-1 py-1 cursor-pointer active:scale-[.97] group-hover:bg-red-500 rounded-lg text-[15px]"
+                        className="px-1 py-1 cursor-pointer active:scale-[.97] group-hover:bg-red-500 rounded-lg text-[15px]"
                         onClick={() => deleteHandler(element.id)}
                       >
                         <svg
-                          class="w-6 h-6 text-red-500 group-hover:text-white dark:text-white"
+                          className="w-6 h-6 text-red-500 group-hover:text-white dark:text-white"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -223,7 +223,7 @@ export const Table3 = ({
                             stroke="currentColor"
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            stroke-width="2"
+                            strokeWidth="2"
                             d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
                           />
                         </svg>
@@ -235,8 +235,8 @@ export const Table3 = ({
             </tbody>
           </table>
         </div>
-        <nav class="" aria-label="Table navigation">
-          <div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+        <nav className="" aria-label="Table navigation">
+          <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
             <div>
               <label htmlFor="rowsPerPage" className="mr-2">
                 Rows per page:
@@ -252,7 +252,7 @@ export const Table3 = ({
                 <option value={20}>20</option>
               </select>
             </div>
-            <div class="inline-flex mt-2 xs:mt-0">
+            <div className="inline-flex mt-2 xs:mt-0">
               <button
                 onClick={() => {
                   if (handleChangePage && currentPage) {
@@ -260,7 +260,7 @@ export const Table3 = ({
                   }
                 }}
                 disabled={currentPage === 1}
-                class="px-3 py-1 shadow-lg shadow-gray-500/50 bg-primary-950 text-white rounded-lg text-[15px] cursor-pointer active:scale-[.97]"
+                className="px-3 py-1 shadow-lg shadow-gray-500/50 bg-primary-950 text-white rounded-lg text-[15px] cursor-pointer active:scale-[.97]"
               >
                 Previous
               </button>
@@ -272,7 +272,7 @@ export const Table3 = ({
                   }
                 }}
                 disabled={endIndex >= (sortedUsers ? sortedUsers.length : 0)}
-                class="px-3 py-1 shadow-lg shadow-gray-500/50 bg-primary-950 text-white rounded-lg text-[15px] cursor-pointer active:scale-[.97]"
+                className="px-3 py-1 shadow-lg shadow-gray-500/50 bg-primary-950 text-white rounded-lg text-[15px] cursor-pointer active:scale-[.97]"
               >
                 Next
               </button>
