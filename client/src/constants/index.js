@@ -75,12 +75,62 @@ export const navBarList = [
   {
     _id: 1004,
     title: "Contact",
-    link: "contact",
+    link: "/contact",
   },
   {
     _id: 1005,
     title: "Journal",
     link: "/journal",
+  },
+  {
+    _id: 1006,
+    title: "Logout",
+  },
+];
+// =================== AdminNavBarList Start here ====================
+export const adminNavBarList = [
+  {
+    _id: 1006,
+    title: "Home",
+    link: "/admin/home",
+  },
+  {
+    _id: 1007,
+    title: "Categories",
+    link: "/admin/categories",
+  },
+  {
+    _id: 1008,
+    title: "Users",
+    link: "/admin/users",
+  },
+  {
+    _id: 1009,
+    title: "Products",
+    link: "contact",
+  },
+  {
+    _id: 1010,
+    title: "Logout",
+  },
+];
+// =================== NavBarList End here ======================
+// =================== AdminNavBarList Start here ====================
+export const guestNavBarList = [
+  {
+    _id: 1006,
+    title: "Home",
+    link: "/",
+  },
+  {
+    _id: 1007,
+    title: "Login",
+    link: "/signin",
+  },
+  {
+    _id: 1008,
+    title: "SignUp",
+    link: "/signup",
   },
 ];
 // =================== NavBarList End here ======================

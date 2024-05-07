@@ -1,51 +1,11 @@
-import { UserTable } from "../../components/Table/table";
-import React, { useEffect, useState } from "react";
-import { Table2 } from "../../components/Table/Table2";
+
+import React, { useEffect, useState, useNavigate } from "react";
 import { Table3 } from "../../components/Table/Table3";
-import Table4 from "../../components/Table/Table4";
-import userApis from "../../apis/userApis"; // replace with the actual path to your userApi file
-import { getAuthenticatedUser } from "../../helper/Storage";
+import categoriesApis from "../../apis/categoriesApis"; // replace with the actual path to your userApi file
 
-const generateRandomName = () => {
-  const names = ["John", "Jane", "Michael", "Emily", "David", "Sarah"];
-  const randomIndex = Math.floor(Math.random() * names.length);
-  return names[randomIndex];
-};
+const Categories = () => {
+  // const navigate = useNavigate();
 
-const generateRandomEmail = (name) => {
-  const domains = ["gmail.com", "yahoo.com", "hotmail.com", "example.com"];
-  const randomDomainIndex = Math.floor(Math.random() * domains.length);
-  return `${name.toLowerCase()}@${domains[randomDomainIndex]}`;
-};
-
-const generateRandomAge = () => {
-  return Math.floor(Math.random() * 80) + 18; // Random age between 18 and 97
-};
-
-const generateRandomCountry = () => {
-  const countries = ["USA", "Canada", "UK", "Australia", "Germany", "France"];
-  const randomIndex = Math.floor(Math.random() * countries.length);
-  return countries[randomIndex];
-};
-
-const generateRandomSubscription = () => {
-  return Math.random() < 0.5; // 50% chance of being true
-};
-
-const generateUsers = (count) => {
-  const users = [];
-  for (let i = 1; i <= count; i++) {
-    const name = generateRandomName();
-    const email = generateRandomEmail(name);
-    const age = generateRandomAge();
-    const country = generateRandomCountry();
-    users.push({ id: i, name, email, age, country });
-  }
-  return users;
-};
-
-const Users = () => {
-  const auth = getAuthenticatedUser();
   const [data, setData] = useState({
     result: [],
     loading: true,
@@ -54,46 +14,50 @@ const Users = () => {
   });
   // const [loading, setLoading] = useState(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  
+
   useEffect(() => {
     const fetchData = async () => {
-      setData({ ...data, loading: true });
-      try {
-        const response = await userApis.getUsers(auth.user.token);
+    setData({ ...data, loading: true });
+    await categoriesApis
+      .getAllcategories()
+      .then((response) => {
+        console.log(response.data.categories);
+        console.log("response: ", response);
         setData({
           ...data,
-          result: response.data.users,
+          result: response.data.categories,
           loading: false,
           error: null,
         });
-      } catch (error) {
+      })
+      .catch((error) => {
+        console.error("error catch:", error);
         setData({
           result: [],
           loading: false,
           error:
             error?.response?.data?.error ||
-            "The User service is under maintenance",
+            "The Category service is under maintenance",
         });
-      }
+      });
     };
 
     fetchData();
   }, []);
-  // console.log("error: ", data.error);
-  // console.log(data.result);
+  console.log("error: ", data.error);
+  console.log(data.result);
 
   const deleteHandler = async (id) => {
-    await userApis
-      .deleteUser(id, auth.user.token)
+    await categoriesApis
+      .Deletecategory(id)
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
         setData({ ...data, reload: data.reload + 1 });
-        // setTimeout(() => {
-        //   window.location.reload();
-        // }, 5000);
         window.location.reload();
       })
       .catch((error) => {
-        // console.error("Failed to delete user:", error);
+        console.error("Failed to delete user:", error);
         setData({
           ...data,
           error:
@@ -103,6 +67,8 @@ const Users = () => {
       });
   };
 
+  
+
   return (
     <div className="mt-3 mb-3">
       {data.loading && (
@@ -110,7 +76,7 @@ const Users = () => {
           <div role="status">
             <svg
               aria-hidden="true"
-              className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -124,18 +90,18 @@ const Users = () => {
                 fill="currentFill"
               />
             </svg>
-            <span className="sr-only">Loading...</span>
+            <span class="sr-only">Loading...</span>
           </div>
         </div>
       )}
       {data.error && (
         <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
           <div
-            className="flex justify-center items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 md:w-5/6"
+            class="flex justify-center items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 md:w-1/4"
             role="alert"
           >
             <svg
-              className="flex-shrink-0 inline w-4 h-4 me-3"
+              class="flex-shrink-0 inline w-4 h-4 me-3"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
@@ -143,17 +109,21 @@ const Users = () => {
             >
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>
-            <span className="sr-only">Info</span>
-            <div className="text-lg">
-              <span className="font-medium"></span> {data.error}
+            <span class="sr-only">Info</span>
+            <div class="text-lg">
+              <span class="font-medium"></span> {data.error}
             </div>
           </div>
           <button
             type="button"
-            className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 w-1/6"
+            class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            onClick={() => {
+                    window.location.href = "/admin/addcategory";
+                    // navigate('/admin/addcategory');
+                  }}
           >
             <svg
-              className="h-5 w-5 mr-3"
+              class="h-5 w-5 mr-3"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +133,7 @@ const Users = () => {
                 d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
               />
             </svg>
-            Add User
+            Add Category
           </button>
         </div>
       )}
@@ -171,13 +141,14 @@ const Users = () => {
         <Table3
           data={data.result}
           canAdd={true}
-          pageName={"User"}
+          pageName={"Category"}
           canEdit={false}
           deleteHandler={deleteHandler}
+          addPath="/admin/addcategory"
         />
       )}
     </div>
   );
 };
 
-export default Users;
+export default Categories;
