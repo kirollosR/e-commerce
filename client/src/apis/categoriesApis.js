@@ -11,7 +11,7 @@ const CategoryApi = axios.create({
 
 export const getAllcategories = () => CategoryApi.get('/categories/')
 export const Addcategories = (name) => CategoryApi.post('/categories/', { name })
-export const Deletecategory = () => CategoryApi.delete('/categories/${id}')
+export const Deletecategory = (id) => CategoryApi.delete(`/categories/${id}`)
 
 const apis = {
     getAllcategories,
