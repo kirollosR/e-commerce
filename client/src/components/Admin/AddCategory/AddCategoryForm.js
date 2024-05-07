@@ -1,32 +1,31 @@
 import { useState } from 'react';
+import { Addcategories } from '../../../apis/categoriesApis'; // Import your API connection
 
 const AddCategoryForm = () => {
     const [categoryName, setCategoryName] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
-    const handleCategoryNameChange = (e) => {
-        setCategoryName(e.target.value);
-    };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        
+        if (!categoryName.trim()) {
+            setErrorMessage('Category name cannot be empty');
+            return;
+        }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
         try {
-            const response = await fetch('/categories/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name: categoryName })
-            });
-            if (response.ok) {
-                // Category added successfully
-                console.log('Category added successfully');
-                // Optionally, you can redirect the user or perform any other action here
-            } else {
-                // Handle error
-                console.error('Failed to add category');
-            }
+            setIsLoading(true); // Set loading state to true to disable the button
+            await Addcategories(categoryName);
+            // Reset form after successful submission if needed
+            setCategoryName('');
+            setSuccessMessage('Category added successfully');
         } catch (error) {
-            console.error('Error adding category:', error);
+            // Handle error, e.g., show error message
+            setErrorMessage('Failed to add category');
+        } finally {
+            setIsLoading(false); // Set loading state back to false after request completion
         }
     };
 
@@ -41,18 +40,21 @@ const AddCategoryForm = () => {
                         <input
                             type="text"
                             id="categoryName"
-                            placeholder="Watches for example"
+                            placeholder="Watchs for example"
                             value={categoryName}
-                            onChange={handleCategoryNameChange}
+                            onChange={(e) => setCategoryName(e.target.value)}
                             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                         />
                     </div>
+                    {errorMessage && <div className="text-red-600 mb-2">{errorMessage}</div>}
+                    {successMessage && <div className="text-green-600 mb-2">{successMessage}</div>}
                     <div>
                         <button
                             type="submit"
                             className="hover:shadow-form w-full rounded-md bg-black py-3 px-8 text-center text-base font-semibold text-white outline-none"
+                            disabled={isLoading}
                         >
-                            Add category
+                            {isLoading ? 'Adding category...' : 'Add category'}
                         </button>
                     </div>
                 </form>
