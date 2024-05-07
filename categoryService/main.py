@@ -58,12 +58,13 @@ async def delete_category(category_id_input: CategoryIdInput):
 
 @app.get("/categories/")
 async def get_all_categories():
-    query = "SELECT name FROM categories"
+    query = "SELECT id, name FROM categories"
     result = execute_query(query)
-    categories = [row[0] for row in result]
+    categories = [{"id": row[0], "name": row[1]} for row in result]
     return categories
 
-@app.get("/categories/get")
+
+@app.get("/categories/id")
 async def get_category_by_id(category_id_input: CategoryIdInput):
     id = category_id_input.id
     

@@ -34,6 +34,7 @@ import { getAuthenticatedUser } from "./helper/Storage";
 import AdminHeader from "./components/Admin/AdminHeader/AdminHeader";
 import AddCategoryForm from "./components/Admin/AddCategory/AddCategoryForm";
 import EditProfile from "./pages/Profile/EditProfile";
+import Categories from "./pages/Categories/Categories";
 
 const Layout = () => {
   return (
@@ -146,6 +147,7 @@ const router = createBrowserRouter(
     <Route>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/category" element={<Categories />} />
         
         <Route
           path="/profile"

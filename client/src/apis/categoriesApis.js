@@ -2,7 +2,7 @@ import { data } from 'autoprefixer';
 import axios from 'axios';
 
 const userApi = axios.create({
-    baseURL: 'http://user-service:5001/user',
+    baseURL: 'http://categoryservice:5003',
 });
 
 export const getUsers = () => userApi.get('/');
