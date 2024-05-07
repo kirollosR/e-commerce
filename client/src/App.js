@@ -146,6 +146,7 @@ const router = createBrowserRouter(
     <Route>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        
         <Route
           path="/profile"
           element={<ProtectedRoute element={<Profile />} redirectTo="/signin" />}
@@ -159,6 +160,7 @@ const router = createBrowserRouter(
         path="/admin"
         element={<AdminRoute element={<Admin />} redirectTo="/" />}
       >
+        <Route path="/admin/category" element={<AddCategoryForm />} />
         <Route path="/admin-home" element={<AdminHome />} />
         <Route path="/admin/users" element={<Users />} />
       </Route>
