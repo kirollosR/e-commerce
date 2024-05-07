@@ -73,22 +73,29 @@ const Profile = () => {
           <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
             <div class="flex items-center justify-between bg-white rounded-lg shadow-xl p-8">
               <h4 class="text-xl text-gray-900 font-bold">Personal Info</h4>
-              <button class="flex items-center px-3 py-1 bg-black text-white font-semibold rounded hover:bg-gray-900 focus:outline-none focus:ring focus:ring-gray-700">
+              <button
+                type="button"
+                class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-10 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+              >
                 <svg
-                  class="h-5 w-5 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                  class="w-6 h-6 "
+                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
                 >
                   <path
+                    stroke="currentColor"
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm0 0h-2m-4 8h10c1.1 0 2-.9 2-2V6a2 2 0 00-2-2H7a2 2 0 00-2 2v12c0 1.1.9 2 2 2z"
-                  ></path>
+                    d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                  />
                 </svg>
-                Edit
+
+                <p class="">edit</p>
               </button>
             </div>
 
