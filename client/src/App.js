@@ -148,6 +148,7 @@ const router = createBrowserRouter(
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/category" element={<Categories />} />
+        <Route path="/Addcategory" element={<AddCategoryForm />} />
         
         <Route
           path="/profile"
@@ -162,7 +163,7 @@ const router = createBrowserRouter(
         path="/admin"
         element={<AdminRoute element={<Admin />} redirectTo="/" />}
       >
-        <Route path="/admin/category" element={<AddCategoryForm />} />
+        {/* <Route path="/admin/category" element={<AddCategoryForm />} /> */}
         <Route path="/admin-home" element={<AdminHome />} />
         <Route path="/admin/users" element={<Users />} />
       </Route>
