@@ -10,6 +10,7 @@ const SignIn = () => {
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState(""); // State to hold error message from login API
+  const [isLoading, setIsLoading] = useState(false); // State to indicate loading state
 
   const handleUsername = (e) => {
     setEmail(e.target.value);
@@ -26,13 +27,19 @@ const SignIn = () => {
   const handleSignIn = async (e) => {
     e.preventDefault();
 
+    if (isLoading) return; // Prevent multiple requests while waiting for response
+
+    setIsLoading(true); // Set loading state to true
+
     if (!email) {
-      setErrEmail("Enter your email");
+      setErrEmail("Enter your username");
+      setIsLoading(false); // Reset loading state
       return;
     }
 
     if (!password) {
       setErrPassword("Enter your password");
+      setIsLoading(false); // Reset loading state
       return;
     }
 
@@ -46,15 +53,30 @@ const SignIn = () => {
       // If login fails, display error message
       if (error.response) {
         if (error.response.status === 401) {
-          setErrorMsg("Invalid username or password. Please try again."); // Handle 401 Unauthorized error
-        } else if (error.response.data) {
-          setErrorMsg(error.response.data.error); // Handle other errors
+          const { data } = error.response;
+          if (data.error === "User not found") {
+            setErrorMsg("User not found. Please check your username.");
+          } else {
+            setErrorMsg("Invalid username or password. Please try again.");
+          }
+        } else if (error.response.status === 400 && error.response.data.errors) {
+          // Handle validation errors
+          const errors = error.response.data.errors;
+          errors.forEach((err) => {
+            if (err.param === "username") {
+              setErrEmail(err.msg);
+            } else if (err.param === "password") {
+              setErrPassword(err.msg);
+            }
+          });
         } else {
-          setErrorMsg("An unknown error occurred."); // Handle case where error.response.data is undefined
+          setErrorMsg("You entered a wrong password, Please try again");
         }
       } else {
-        setErrorMsg("An unknown error occurred."); // Handle case where error.response is undefined
+        setErrorMsg("Service is currently unavailable. Please try again later.");
       }
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   };
 
@@ -114,9 +136,12 @@ const SignIn = () => {
 
               <button
                 onClick={handleSignIn}
-                className="bg-primeColor hover:bg-black text-gray-200 hover:text-white cursor-pointer w-full text-base font-medium h-10 rounded-md duration-300"
+                disabled={isLoading} // Disable the button when loading
+                className={`bg-primeColor hover:bg-black text-gray-200 hover:text-white cursor-pointer w-full text-base font-medium h-10 rounded-md duration-300 ${
+                  isLoading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                Sign In
+                {isLoading ? "Signing In..." : "Sign In"}
               </button>
               <p className="text-sm text-center font-titleFont font-medium">
                 Don't have an Account?{" "}
