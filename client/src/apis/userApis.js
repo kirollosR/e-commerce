@@ -5,8 +5,8 @@ const userApi = axios.create({
     baseURL: 'http://localhost:5001/user',
 });
 
-export const getUsers = () => userApi.get('/');
-export const deleteUser = id => userApi.delete(`/${id}`);
+export const getUsers = (userToken) => userApi.get('/', { headers: { token: userToken } });
+export const deleteUser = (id, userToken) => userApi.delete(`/${id}`, { headers: { token: userToken } });
 export const getUser = userToken => userApi.get(`/getUser`, { headers: { token: userToken } });
 export const isAdmin = () => userApi.post(data);
 

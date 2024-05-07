@@ -4,6 +4,7 @@ import { Table2 } from "../../components/Table/Table2";
 import { Table3 } from "../../components/Table/Table3";
 import Table4 from "../../components/Table/Table4";
 import userApis from "../../apis/userApis"; // replace with the actual path to your userApi file
+import { getAuthenticatedUser } from "../../helper/Storage";
 
 const generateRandomName = () => {
   const names = ["John", "Jane", "Michael", "Emily", "David", "Sarah"];
@@ -44,6 +45,7 @@ const generateUsers = (count) => {
 };
 
 const Users = () => {
+  const auth = getAuthenticatedUser();
   const [data, setData] = useState({
     result: [],
     loading: true,
@@ -56,7 +58,7 @@ const Users = () => {
     const fetchData = async () => {
       setData({ ...data, loading: true });
       try {
-        const response = await userApis.getUsers();
+        const response = await userApis.getUsers(auth.user.token);
         setData({
           ...data,
           result: response.data.users,
@@ -76,19 +78,22 @@ const Users = () => {
 
     fetchData();
   }, []);
-  console.log("error: ", data.error);
-  console.log(data.result);
+  // console.log("error: ", data.error);
+  // console.log(data.result);
 
   const deleteHandler = async (id) => {
     await userApis
-      .deleteUser(id)
+      .deleteUser(id, auth.user.token)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setData({ ...data, reload: data.reload + 1 });
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 5000);
         window.location.reload();
       })
       .catch((error) => {
-        console.error("Failed to delete user:", error);
+        // console.error("Failed to delete user:", error);
         setData({
           ...data,
           error:

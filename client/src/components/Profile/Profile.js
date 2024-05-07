@@ -43,7 +43,7 @@ const Profile = () => {
     const fetchData = async () => {
       setData({ ...data, loading: true });
       await userApis
-        .getUser(auth.token)
+        .getUser(auth.user.token)
         .then((response) => {
           setData({
             ...data,

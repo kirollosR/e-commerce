@@ -3,7 +3,6 @@ const User = require('../models/user.model');
 const getAllUsers = async (req, res) => {
     try{
         const users = await User.find({ role: "user"});
-        console.log(users);
         if(users.length === 0 || !users){
             return res.status(404).json({
                 error: 'No users found',

@@ -130,7 +130,7 @@ const ProtectedRoute = ({ element, redirectTo }) => {
 
 const AdminRoute = ({ element }) => {
   const auth = getAuthenticatedUser();
-  return auth && auth.role === "admin" ? element : <Navigate to="/" replace />;
+  return auth && auth.user.role === "admin" ? element : <Navigate to="/" replace />;
 }
 
 const GuestRoute = ({ element, redirectTo }) => {
@@ -146,7 +146,7 @@ const router = createBrowserRouter(
     <Route>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/users" element={<Users />} /> */}
+        <Route path="/users" element={<Users />} />
         
         <Route
           path="/profile"
@@ -165,6 +165,7 @@ const router = createBrowserRouter(
         path="/admin"
         element={<AdminRoute element={<Admin />} redirectTo="/" />}
       >
+        <Route path="/admin/home" element={<Home/>} />
         <Route path="/admin/category" element={<AddCategoryForm />} />
         <Route path="/admin-home" element={<AdminHome />} />
         <Route path="/admin/users" element={<Users />} />
