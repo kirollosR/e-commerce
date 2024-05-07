@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN pip install --no-cache-dir fastapi uvicorn
 RUN pip install mysql-connector-python
-RUN uvicorn main:app --reload --port 5003
+#RUN uvicorn main:app --reload --port 5003
 
 COPY main.py ./
 

@@ -1,8 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Table3 } from "../../components/Table/Table3";
-import userApis from "../../apis/userApis"; // replace with the actual path to your userApi file
-
+import categoriesApis from "../../apis/categoriesApis"; // replace with the actual path to your userApi file
 
 const Categories = () => {
   const [data, setData] = useState({
@@ -15,14 +14,14 @@ const Categories = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     setData({ ...data, loading: true });
-    await userApis
-      .getUsers()
+    await categoriesApis
+      .getAllcategories()
       .then((response) => {
-        console.log(response.data.users);
+        console.log(response.data.categories);
         console.log("response: ", response);
         setData({
           ...data,
-          result: response.data.users,
+          result: response.data.categories,
           loading: false,
           error: null,
         });
@@ -41,8 +40,8 @@ const Categories = () => {
   console.log(data.result);
 
   const deleteHandler = async (id) => {
-    await userApis
-      .deleteUser(id)
+    await categoriesApis
+      .Deletecategory(id)
       .then((response) => {
         console.log(response.data);
         setData({ ...data, reload: data.reload + 1 });
@@ -58,6 +57,8 @@ const Categories = () => {
         });
       });
   };
+
+  
 
   return (
     <div className="mt-3 mb-3">
@@ -126,7 +127,7 @@ const Categories = () => {
       {!data.error && !data.loading && (
         <Table3
           data={data.result}
-          canAdd={false}
+          canAdd={true}
           pageName={"Category"}
           canEdit={false}
           deleteHandler={deleteHandler}

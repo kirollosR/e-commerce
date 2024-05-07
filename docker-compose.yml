@@ -6,6 +6,8 @@ services:
     stdin_open: true
     ports:
       - "3000:3000"
+    networks:
+      - e-commerce-app
     volumes:
       - ./client:/app
       - /app/node_modules
@@ -65,14 +67,19 @@ services:
 
   categoryservice:
     build: ./categoryservice
-    container_name: ecommerce_category_Service
+    container_name: categories_container
     stdin_open: true
     ports:
       - "5003:5003"
     networks:
       - e-commerce-app
+    links:
+      - category_db
+    restart: on-failure
+    depends_on:
+      - category_db
     volumes:
-      - ./categoryservice:/app
+      - ./categoryservices:/app
       - /app/__pycache__
 
   category_db:
