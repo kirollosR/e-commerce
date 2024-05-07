@@ -1,8 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
+
+const swaggerAutogen = require('swagger-autogen')();
 
 const db = require('./config/db');
+// const db = require('./config/db_mongoDb');
 const userRouter = require('./routes/user.routes');
 
 const app = express();
@@ -14,12 +19,16 @@ app.use(bodyParser.json());
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// Define your routes here
-// app.get('/', (req, res) => {
-//     res.send('User Service Health Check Passed');
-// });
 
-// app.use('/api', userRouter);
+// Define your routes here
+app.get('/', (req, res) => {
+    res.send('User Service Health Check Passed');
+});
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+console.log('Swagger documentation is available at http://localhost:5001/api-docs');
+
+app.use('/user', userRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
