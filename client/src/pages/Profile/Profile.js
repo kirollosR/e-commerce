@@ -1,8 +1,6 @@
 import React from "react";
 const Profile = () => {
     return (
-
-        
         <div class="my-4 ">
             <div class="w-full >">
                 <div class="flex-1 bg-white rounded-lg shadow-xl p-8">

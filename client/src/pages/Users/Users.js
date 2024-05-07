@@ -5,18 +5,6 @@ import { Table3 } from "../../components/Table/Table3";
 import Table4 from "../../components/Table/Table4";
 import userApis from "../../apis/userApis"; // replace with the actual path to your userApi file
 
-// const fetchData = async () => {
-//   try {
-//     const users = await userApi.getUsers();
-//     console.log(users);
-//   } catch (error) {
-//     console.error("Failed to fetch users:", error);
-//   }
-// };
-
-// fetchData();
-// console.log(fetchData());
-
 const generateRandomName = () => {
   const names = ["John", "Jane", "Michael", "Emily", "David", "Sarah"];
   const randomIndex = Math.floor(Math.random() * names.length);
