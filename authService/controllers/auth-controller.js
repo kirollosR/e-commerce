@@ -152,12 +152,14 @@ login = async (req, res) => {
     if (checkPassword) {
       // Fetch user ID by token
       const response = await getUser(user.token);
-      console.log(response)
       const userData = response.data.user;
-      console.log(userData)
+      const userRes= {
+        role: userData.role,
+        token: user.token
+      };
 
       // Send response with role
-      res.status(200).json({ message: "Login successful", token: user.token, role: userData.role });
+      res.status(200).json({ message: "Login successful", user: userRes });
     } else {
       return res.status(400).json({
         success: false,
