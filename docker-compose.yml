@@ -32,8 +32,8 @@ services:
       - ./userService:/app
       - /app/node_modules
 
-  categories_servise:
-    build: ./categories_servise
+  categoryservice:
+    build: ./categoryservice
     container_name: categories_container
     stdin_open: true
     ports:
@@ -46,7 +46,7 @@ services:
     depends_on:
       - category_db
     volumes:
-      - ./categories_servise:/app
+      - ./categoryservice:/app
       - /app/__pycache__
 
   category_db:
