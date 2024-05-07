@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-export const Table3 = ({ data=[], canAdd = false, pageName, canEdit = false }) => {
+export const Table3 = ({
+  data = [],
+  canAdd = false,
+  pageName,
+  canEdit = false,
+  deleteHandler,
+}) => {
   const [sortBy, setSortBy] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
@@ -200,7 +206,10 @@ export const Table3 = ({ data=[], canAdd = false, pageName, canEdit = false }) =
                   ))}
                   <td>
                     <div class="group">
-                      <button class="px-1 py-1 cursor-pointer active:scale-[.97] group-hover:bg-red-500 rounded-lg text-[15px]">
+                      <button
+                        class="px-1 py-1 cursor-pointer active:scale-[.97] group-hover:bg-red-500 rounded-lg text-[15px]"
+                        onClick={() => deleteHandler(element.id)}
+                      >
                         <svg
                           class="w-6 h-6 text-red-500 group-hover:text-white dark:text-white"
                           aria-hidden="true"
