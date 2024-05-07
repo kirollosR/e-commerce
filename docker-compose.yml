@@ -1,29 +1,60 @@
 version: "3"
 services:
-  client:
-    build: ./client
-    container_name: ecommerce_client
+  # client:
+  #   build: ./client
+  #   container_name: ecommerce_client
+  #   stdin_open: true
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./client:/app
+  #     - /app/node_modules
+
+  auth-service:
+    build: ./authService
+    container_name: ecommerce_auth_service
     stdin_open: true
     ports:
-      - "3000:3000"
+      - "5000:5000"
+    networks:
+      - e-commerce-app
+    links:
+      - auth-db
+    restart: on-failure
+    depends_on:
+      - auth-db
     volumes:
-      - ./client:/app
+      - ./authService:/app
       - /app/node_modules
+
+  auth-db:
+    image: mongo:latest
+    container_name: ecommerce_user_auth_db
+    ports:
+      - "27020:27017"
+    networks:
+      - e-commerce-app
+    volumes:
+      - auth-volume:/data/db
 
   usersDb:
     image: mongo:latest
     container_name: ecommerce_user_db
     ports:
       - "27018:27017"
+    networks:
+      - e-commerce-app
     volumes:
       - users-volume:/data/db
 
-  user_service:
+  user-service:
     build: ./userService
     container_name: ecommerce_user_service
     stdin_open: true
     ports:
       - "5001:5001"
+    networks:
+      - e-commerce-app
     links:
       - usersDb
     depends_on:
@@ -35,18 +66,17 @@ services:
   categoryservice:
     build: ./categoryservice
     container_name: categories_container
+  categoryService:
+    build: ./categoryService
+    container_name: ecommerce_category_Service
     stdin_open: true
     ports:
       - "5003:5003"
     networks:
-      - my-app
-    links:
-      - category_db
-    restart: on-failure
-    depends_on:
-      - category_db
+      - e-commerce-app
     volumes:
       - ./categoryservice:/app
+      - ./categoryService:/app
       - /app/__pycache__
 
   category_db:
@@ -60,12 +90,14 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: category_database
+
+networks:
+  e-commerce-app:
+    driver: bridge
 volumes:
+  auth-volume:
+    driver: local
   users-volume:
     driver: local
   category-volume:
     driver: local
-
-networks:
-  my-app:
-    driver: bridge
