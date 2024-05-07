@@ -45,25 +45,36 @@ async def add_category(category: Category):
     return {"message": "Category added successfully"}
 
 
-@app.delete("/categories/")
-async def delete_category(category_id_input: CategoryIdInput):
-    id = category_id_input.id
-    if not execute_query("SELECT id FROM categories WHERE id = %s", (id,)):
+# @app.delete("/categories/")
+# async def delete_category(category_id_input: CategoryIdInput):
+#     id = category_id_input.id
+#     if not execute_query("SELECT id FROM categories WHERE id = %s", (id,)):
+#         raise HTTPException(status_code=404, detail="Category not found")
+    
+#     query = "DELETE FROM categories WHERE id = %s"
+#     execute_query(query, (id,))
+#     return {"message": "Category deleted successfully"}
+
+@app.delete("/categories/{category_id}")
+async def delete_category(category_id: int):
+    if not execute_query("SELECT id FROM categories WHERE id = %s", (category_id,)):
         raise HTTPException(status_code=404, detail="Category not found")
     
     query = "DELETE FROM categories WHERE id = %s"
-    execute_query(query, (id,))
+    execute_query(query, (category_id,))
     return {"message": "Category deleted successfully"}
 
 
 @app.get("/categories/")
 async def get_all_categories():
-    query = "SELECT name FROM categories"
+    query = "SELECT id, name FROM categories"
     result = execute_query(query)
-    categories = [row[0] for row in result]
-    return categories
+    categories = [{"id": row[0], "name": row[1]} for row in result]
+    return {"categories": categories}
 
-@app.get("/categories/get")
+
+
+@app.get("/categories/id")
 async def get_category_by_id(category_id_input: CategoryIdInput):
     id = category_id_input.id
     

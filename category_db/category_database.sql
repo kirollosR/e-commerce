@@ -25,10 +25,10 @@ INSERT INTO categories (name) VALUES
 
 -- Inserting data into the products table
 INSERT INTO products (name, price, category_id) VALUES
-    ('Smartphone', 499.99, 1),
-    ('Laptop', 899.99, 1),
-    ('T-shirt', 19.99, 2),
-    ('Jeans', 39.99, 2),
-    ('Novel', 12.99, 3),
-    ('Textbook', 79.99, 3);
+    ('Smartphone', 499.99, 19),
+    ('Laptop', 899.99, 19),
+    ('T-shirt', 19.99, 20),
+    ('Jeans', 39.99, 20),
+    ('Novel', 12.99, 21),
+    ('Textbook', 79.99, 21);
 

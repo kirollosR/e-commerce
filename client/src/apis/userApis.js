@@ -2,7 +2,7 @@ import { data } from 'autoprefixer';
 import axios from 'axios';
 
 const userApi = axios.create({
-    baseURL: 'http://localhost:5001/user',
+    baseURL: 'http://user-service:5001/user',
 });
 
 export const getUsers = (userToken) => userApi.get('/', { headers: { token: userToken } });

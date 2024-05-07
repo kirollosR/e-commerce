@@ -34,11 +34,7 @@ import { getAuthenticatedUser } from "./helper/Storage";
 import AdminHeader from "./components/Admin/AdminHeader/AdminHeader";
 import AddCategoryForm from "./pages/Admin/AddCategory/AddCategoryForm";
 import EditProfile from "./pages/Profile/EditProfile";
-import AddProduct from "./pages/Admin/AddProduct/AddProduct";
-
-
-
-
+import Categories from "./pages/Categories/Categories";
 
 const Layout = () => {
   return (
@@ -151,6 +147,8 @@ const router = createBrowserRouter(
     <Route>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/category" element={<Categories />} />
+        <Route path="/Addcategory" element={<AddCategoryForm />} />
         
         <Route
           path="/profile"
@@ -175,8 +173,7 @@ const router = createBrowserRouter(
         path="/admin"
         element={<AdminRoute element={<Admin />} redirectTo="/" />}
       >
-        <Route path="/admin/home" element={<Home/>} />
-        <Route path="/admin/category" element={<AddCategoryForm />} />
+        {/* <Route path="/admin/category" element={<AddCategoryForm />} /> */}
         <Route path="/admin-home" element={<AdminHome />} />
         <Route path="/admin/users" element={<Users />} />
       </Route>

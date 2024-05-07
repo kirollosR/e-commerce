@@ -1,14 +1,16 @@
 version: "3"
 services:
-  # client:
-  #   build: ./client
-  #   container_name: ecommerce_client
-  #   stdin_open: true
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./client:/app
-  #     - /app/node_modules
+  client:
+    build: ./client
+    container_name: ecommerce_client
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - e-commerce-app
+    volumes:
+      - ./client:/app
+      - /app/node_modules
 
   auth-service:
     build: ./authService
@@ -63,16 +65,21 @@ services:
       - ./userService:/app
       - /app/node_modules
 
-  categoryService:
-    build: ./categoryService
-    container_name: ecommerce_category_Service
+  categoryservice:
+    build: ./categoryservice
+    container_name: categories_container
     stdin_open: true
     ports:
       - "5003:5003"
     networks:
       - e-commerce-app
+    links:
+      - category_db
+    restart: on-failure
+    depends_on:
+      - category_db
     volumes:
-      - ./categoryService:/app
+      - ./categoryservices:/app
       - /app/__pycache__
 
   category_db:
@@ -80,7 +87,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - my-app
+      - e-commerce-app
     volumes:
       - category-volume:/var/lib/mysql
     environment:
