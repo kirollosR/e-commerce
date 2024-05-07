@@ -161,7 +161,7 @@ login = async (req, res) => {
       // Send response with role
       res.status(200).json({ message: "Login successful", user: userRes });
     } else {
-      return res.status(400).json({
+      return res.status(401).json({
         success: false,
         error: "You entered a wrong password, Please try again",
       });
