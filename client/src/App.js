@@ -146,11 +146,16 @@ const router = createBrowserRouter(
     <Route>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/users" element={<Users />} />
         
         <Route
           path="/profile"
           element={<ProtectedRoute element={<ProfilePage />} redirectTo="/signin" />}
+        >
+          {/* <Route path="/profile/edit" element={<EditProfile />} /> */}
+        </Route>
+        <Route
+          path="/profile/edit"
+          element={<ProtectedRoute element={<EditProfile />} redirectTo="/signin" />}
         />
         {/* <Route
           path="/users"

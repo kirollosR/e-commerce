@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import userApis from "../../apis/userApis";
 import { getAuthenticatedUser } from "../../helper/Storage";
-// import moment from 'moment';
+import { useNavigate } from "react-router-dom";
 
 function formatDate(dateString) {
   const monthNames = [
@@ -30,6 +30,8 @@ function formatDate(dateString) {
 }
 
 const Profile = () => {
+  const navigate = useNavigate();
+  
   const auth = getAuthenticatedUser();
   const [data, setData] = useState({
     result: [],
@@ -71,7 +73,7 @@ const Profile = () => {
 
   return (
     <div>
-    {data.loading && (
+      {data.loading && (
         <div className="flex justify-center">
           <div role="status">
             <svg
@@ -134,75 +136,83 @@ const Profile = () => {
         </div>
       )}
       {!data.error && !data.loading && (
-      <div className="my-4 ">
-        <div className="w-full >">
-          <div className="flex-1 bg-white rounded-lg shadow-xl p-8">
-            <div className="flex items-center justify-between bg-white rounded-lg shadow-xl p-8">
-              <h4 className="text-xl text-gray-900 font-bold">Personal Info</h4>
-              <button
-                type="button"
-                className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-10 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-              >
-                <svg
-                  className="w-6 h-6 "
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
+        <div className="my-4 ">
+          <div className="w-full >">
+            <div className="flex-1 bg-white rounded-lg shadow-xl p-8">
+              <div className="flex items-center justify-between bg-white rounded-lg shadow-xl p-8">
+                <h4 className="text-xl text-gray-900 font-bold">
+                  Personal Info
+                </h4>
+                <button
+                  type="button"
+                  className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-10 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                  onClick={() => {
+                    // window.location.href = "/profile/edit";
+                    navigate('/profile/edit', { state: { data: user } });
+                  }}
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-                  />
-                </svg>
+                  <svg
+                    className="w-6 h-6 "
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                    />
+                  </svg>
 
-                <p className="">edit</p>
-              </button>
-            </div>
+                  <p className="">edit</p>
+                </button>
+              </div>
 
-            {/* <h4 className="text-xl text-gray-900 font-bold">Personal Info</h4> */}
-            <ul className="mt-2 text-gray-700">
-              <li className="flex border-y py-2">
-                <span className="font-bold w-24">Username:</span>
-                <span className="text-gray-700">{user.username}</span>
-              </li>
-              <li className="flex border-y py-2">
-                <span className="font-bold w-24">Full name:</span>
-                <span className="text-gray-700">{user.name}</span>
-              </li>
-              {/* <li className="flex border-b py-2">
+              {/* <h4 className="text-xl text-gray-900 font-bold">Personal Info</h4> */}
+              <ul className="mt-2 text-gray-700">
+                <li className="flex border-y py-2">
+                  <span className="font-bold w-24">Username:</span>
+                  <span className="text-gray-700">{user.username}</span>
+                </li>
+                <li className="flex border-y py-2">
+                  <span className="font-bold w-24">Full name:</span>
+                  <span className="text-gray-700">{user.name}</span>
+                </li>
+                {/* <li className="flex border-b py-2">
                 <span className="font-bold w-24">Birthday:</span>
                 <span className="text-gray-700">24 Jul, 1991</span>
               </li> */}
-              <li className="flex border-b py-2">
-                <span className="font-bold w-24">Joined:</span>
-                <span className="text-gray-700">{formatDate(user.createdAt)}</span>
-              </li>
-              <li className="flex border-b py-2">
-                <span className="font-bold w-24">Mobile:</span>
-                <span className="text-gray-700">{user.phone}</span>
-              </li>
-              <li className="flex border-b py-2">
-                <span className="font-bold w-24">Email:</span>
-                <span className="text-gray-700">{user.email}</span>
-              </li>
-              <li className="flex border-b py-2">
-                <span className="font-bold w-24">Address:</span>
-                <span className="text-gray-700">{user.address}</span>
-              </li>
-              {/* <li className="flex border-b py-2">
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Joined:</span>
+                  <span className="text-gray-700">
+                    {formatDate(user.createdAt)}
+                  </span>
+                </li>
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Mobile:</span>
+                  <span className="text-gray-700">{user.phone}</span>
+                </li>
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Email:</span>
+                  <span className="text-gray-700">{user.email}</span>
+                </li>
+                <li className="flex border-b py-2">
+                  <span className="font-bold w-24">Address:</span>
+                  <span className="text-gray-700">{user.address}</span>
+                </li>
+                {/* <li className="flex border-b py-2">
                 <span className="font-bold w-24">Number of orders:</span>
                 <span className="text-gray-700 text-center">5</span>
               </li> */}
-            </ul>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
       )}
     </div>
   );
