@@ -89,7 +89,7 @@ export const Table3 = ({
       <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
         <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
           <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-            {pageName}s List:
+            {pageName} List:
           </h2>
           <div class="w-full md:w-1/4">
             <form class="flex items-center">
