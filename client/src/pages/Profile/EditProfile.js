@@ -4,7 +4,7 @@ import userApis from "../../apis/userApis";
 import { getAuthenticatedUser } from "../../helper/Storage";
 
 const EditProfile = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const auth = getAuthenticatedUser();
 
@@ -139,6 +139,11 @@ const EditProfile = () => {
           <div className="py-4 px-8 text-center text-black text-xl font-bold border-b border-gray-500">
             Edit User Profile
           </div>
+          <p class="text-center text-gray-500 dark:text-gray-400">
+            Fill only the data you need to update
+          </p>
+          
+
           <form name="student_application" id="student_application" action="">
             <div className="py-4 px-8">
               <div className="mb-4">
