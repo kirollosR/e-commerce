@@ -13,7 +13,7 @@ const getUser = async (req, res) => {
 
     } catch (error) {
         res.statusCode = 500;
-        res.send({ message: error });
+        res.send({ error: error });
     }
 }
 

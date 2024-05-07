@@ -88,7 +88,7 @@ export const adminNavBarList = [
   {
     _id: 1006,
     title: "Home",
-    link: "/admin-home",
+    link: "/",
   },
   {
     _id: 1007,
@@ -98,7 +98,7 @@ export const adminNavBarList = [
   {
     _id: 1008,
     title: "Users",
-    link: "/about",
+    link: "/admin/users",
   },
   {
     _id: 1009,
