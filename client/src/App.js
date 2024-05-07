@@ -32,8 +32,13 @@ import ProfilePage from "./pages/Profile/ProfilePage";
 
 import { getAuthenticatedUser } from "./helper/Storage";
 import AdminHeader from "./components/Admin/AdminHeader/AdminHeader";
-import AddCategoryForm from "./components/Admin/AddCategory/AddCategoryForm";
+import AddCategoryForm from "./pages/Admin/AddCategory/AddCategoryForm";
 import EditProfile from "./pages/Profile/EditProfile";
+import AddProduct from "./pages/Admin/AddProduct/AddProduct";
+
+
+
+
 
 const Layout = () => {
   return (
@@ -146,7 +151,7 @@ const router = createBrowserRouter(
     <Route>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/users" element={<Users />} />
+      
         
         <Route
           path="/profile"
