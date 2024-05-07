@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Table3 = ({
   data = [],
@@ -6,7 +7,10 @@ export const Table3 = ({
   pageName,
   canEdit = false,
   deleteHandler,
+  addPath =''
 }) => {
+  const navigate = useNavigate();
+
   const [sortBy, setSortBy] = useState(null);
   const [sortDirection, setSortDirection] = useState("asc");
   const [currentPage, setCurrentPage] = useState(1);
@@ -155,6 +159,7 @@ export const Table3 = ({
               <button
                 type="button"
                 className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                onClick={() => navigate(addPath)}
               >
                 <svg
                   className="h-5 w-5 mr-3"

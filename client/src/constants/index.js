@@ -92,12 +92,12 @@ export const adminNavBarList = [
   {
     _id: 1006,
     title: "Home",
-    link: "/",
+    link: "/admin/home",
   },
   {
     _id: 1007,
-    title: "Category",
-    link: "/shop",
+    title: "Categories",
+    link: "/admin/categories",
   },
   {
     _id: 1008,

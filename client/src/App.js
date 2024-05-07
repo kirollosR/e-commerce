@@ -147,8 +147,8 @@ const router = createBrowserRouter(
     <Route>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/category" element={<Categories />} />
-        <Route path="/Addcategory" element={<AddCategoryForm />} />
+        
+        
         
         <Route
           path="/profile"
@@ -173,13 +173,13 @@ const router = createBrowserRouter(
         path="/admin"
         element={<AdminRoute element={<Admin />} redirectTo="/" />}
       >
-        {/* <Route path="/admin/category" element={<AddCategoryForm />} /> */}
+        <Route path="/admin/home" element={<Home />} />
+        <Route path="/admin/categories" element={<Categories />} />
+        <Route path="/admin/Addcategory" element={<AddCategoryForm />} />
         <Route path="/admin-home" element={<AdminHome />} />
         <Route path="/admin/users" element={<Users />} />
       </Route>
 
-      {/* <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} /> */}
       <Route
         path="/signin"
         element={<GuestRoute element={<SignIn />} redirectTo="/" />}
@@ -188,14 +188,7 @@ const router = createBrowserRouter(
         path="/signup"
         element={<GuestRoute element={<SignUp />} redirectTo="/" />}
       />
-      
-
-      {/* Guest route example */}
-      {/* <Route path="/guest" element={<Guest />}> */}
-        {/* Define guest-only routes */}
-      {/* </Route> */}
-      {/* Catch-all route */}
-      <Route path="*" element={<Navigate to="/" />} />
+    
     </Route>
   )
 );

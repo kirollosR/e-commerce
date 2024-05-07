@@ -46,8 +46,12 @@ const SignIn = () => {
     try {
       const response = await login(email, password); // Call login API
       if (response.status === 200) {
-        setAuthUser(response.data)
-        navigate("/"); // Navigate to home page
+        setAuthUser(response.data);
+        if (response.data.user.role === "admin") {
+          navigate("/admin/home"); // Navigate to admin page
+        } else {
+          navigate("/"); // Navigate to home page
+        }
       }
     } catch (error) {
       // If login fails, display error message
@@ -59,7 +63,10 @@ const SignIn = () => {
           } else {
             setErrorMsg("Invalid username or password. Please try again.");
           }
-        } else if (error.response.status === 400 && error.response.data.errors) {
+        } else if (
+          error.response.status === 400 &&
+          error.response.data.errors
+        ) {
           // Handle validation errors
           const errors = error.response.data.errors;
           errors.forEach((err) => {
@@ -73,7 +80,9 @@ const SignIn = () => {
           setErrorMsg("You entered a wrong password, Please try again");
         }
       } else {
-        setErrorMsg("Service is currently unavailable. Please try again later.");
+        setErrorMsg(
+          "Service is currently unavailable. Please try again later."
+        );
       }
     } finally {
       setIsLoading(false); // Reset loading state
@@ -131,7 +140,9 @@ const SignIn = () => {
 
               {/* Error Message */}
               {errorMsg && (
-                <p className="text-red-500 text-sm text-center mb-4">{errorMsg}</p>
+                <p className="text-red-500 text-sm text-center mb-4">
+                  {errorMsg}
+                </p>
               )}
 
               <button
@@ -146,7 +157,9 @@ const SignIn = () => {
               <p className="text-sm text-center font-titleFont font-medium">
                 Don't have an Account?{" "}
                 <Link to="/signup">
-                  <span className="hover:text-blue-600 duration-300">Sign up</span>
+                  <span className="hover:text-blue-600 duration-300">
+                    Sign up
+                  </span>
                 </Link>
               </p>
             </div>

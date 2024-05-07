@@ -7,6 +7,9 @@ import { logo, logoLight } from "../../../assets/images";
 import Image from "../../designLayouts/Image";
 import { adminNavBarList } from "../../../constants";
 import Flex from "../../designLayouts/Flex";
+import { useNavigate } from "react-router-dom";
+import { getAuthenticatedUser, removeAuthUser } from "../../../helper/Storage";
+
 
 const AdminHeader = () => {
   const [showMenu, setShowMenu] = useState(true);
@@ -14,6 +17,25 @@ const AdminHeader = () => {
   const [category, setCategory] = useState(false);
   const [brand, setBrand] = useState(false);
   const location = useLocation();
+
+  const navigate = useNavigate();
+  const auth = getAuthenticatedUser();
+  const Logout = () => {
+    removeAuthUser();
+    navigate("/");
+  };
+  useEffect(() => {
+    let ResponsiveMenu = () => {
+      if (window.innerWidth < 667) {
+        setShowMenu(false);
+      } else {
+        setShowMenu(true);
+      }
+    };
+    ResponsiveMenu();
+    window.addEventListener("resize", ResponsiveMenu);
+  }, []);
+
   useEffect(() => {
     let ResponsiveMenu = () => {
       if (window.innerWidth < 667) {
@@ -51,7 +73,11 @@ const AdminHeader = () => {
                       to={link}
                       state={{ data: location.pathname.split("/")[1] }}
                     >
-                      <li>{title}</li>
+                      {title === "Logout" ? (
+                        <li onClick={Logout}>{title}</li>
+                      ) : (
+                        <li>{title}</li>
+                      )}
                     </NavLink>
                   ))}
                 </>

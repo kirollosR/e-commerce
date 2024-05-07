@@ -1,9 +1,11 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useNavigate } from "react";
 import { Table3 } from "../../components/Table/Table3";
 import categoriesApis from "../../apis/categoriesApis"; // replace with the actual path to your userApi file
 
 const Categories = () => {
+  // const navigate = useNavigate();
+
   const [data, setData] = useState({
     result: [],
     loading: true,
@@ -12,7 +14,10 @@ const Categories = () => {
   });
   // const [loading, setLoading] = useState(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
     setData({ ...data, loading: true });
     await categoriesApis
       .getAllcategories()
@@ -27,14 +32,18 @@ const Categories = () => {
         });
       })
       .catch((error) => {
+        console.error("error catch:", error);
         setData({
           result: [],
           loading: false,
           error:
             error?.response?.data?.error ||
-            "The User service is under maintenance",
+            "The Category service is under maintenance",
         });
       });
+    };
+
+    fetchData();
   }, []);
   console.log("error: ", data.error);
   console.log(data.result);
@@ -108,6 +117,10 @@ const Categories = () => {
           <button
             type="button"
             class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            onClick={() => {
+                    window.location.href = "/admin/addcategory";
+                    // navigate('/admin/addcategory');
+                  }}
           >
             <svg
               class="h-5 w-5 mr-3"
@@ -131,6 +144,7 @@ const Categories = () => {
           pageName={"Category"}
           canEdit={false}
           deleteHandler={deleteHandler}
+          addPath="/admin/addcategory"
         />
       )}
     </div>
