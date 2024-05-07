@@ -1,6 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import userApis from "../../apis/userApis";
+import { getAuthenticatedUser } from "../../helper/Storage";
+// import moment from 'moment';
+
+function formatDate(dateString) {
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const date = new Date(dateString);
+  const formattedDate =
+    date.getDate() +
+    " " +
+    monthNames[date.getMonth()] +
+    " " +
+    date.getFullYear();
+  const daysAgo = Math.floor((new Date() - date) / (1000 * 60 * 60 * 24));
+  return `${formattedDate} (${daysAgo} days ago)`;
+}
 
 const Profile = () => {
+  const auth = getAuthenticatedUser();
+  const [data, setData] = useState({
+    result: [],
+    loading: true,
+    error: null,
+    reload: 0,
+  });
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    setData({ ...data, loading: true });
+    await userApis
+      .getUser(auth.token)
+      .then((response) => {
+        console.log(response.data.user);
+        console.log("response: ", response);
+        setData({
+          ...data,
+          result: response.data.user,
+          loading: false,
+          error: null,
+        });
+      })
+      .catch((error) => {
+        setData({
+          result: [],
+          loading: false,
+          error:
+            error?.response?.data?.error ||
+            "The User service is under maintenance",
+        });
+      });
+  }, []);
+  console.log("data: ", data.result);
+  const user = data.result;
+
   return (
     <div>
       <div class="my-4 ">
@@ -30,33 +95,37 @@ const Profile = () => {
             {/* <h4 class="text-xl text-gray-900 font-bold">Personal Info</h4> */}
             <ul class="mt-2 text-gray-700">
               <li class="flex border-y py-2">
-                <span class="font-bold w-24">Full name:</span>
-                <span class="text-gray-700">Amanda S. Ross</span>
+                <span class="font-bold w-24">Username:</span>
+                <span class="text-gray-700">{user.username}</span>
               </li>
-              <li class="flex border-b py-2">
+              <li class="flex border-y py-2">
+                <span class="font-bold w-24">Full name:</span>
+                <span class="text-gray-700">{user.name}</span>
+              </li>
+              {/* <li class="flex border-b py-2">
                 <span class="font-bold w-24">Birthday:</span>
                 <span class="text-gray-700">24 Jul, 1991</span>
-              </li>
+              </li> */}
               <li class="flex border-b py-2">
                 <span class="font-bold w-24">Joined:</span>
-                <span class="text-gray-700">10 Jan 2022 (25 days ago)</span>
+                <span class="text-gray-700">{formatDate(user.createdAt)}</span>
               </li>
               <li class="flex border-b py-2">
                 <span class="font-bold w-24">Mobile:</span>
-                <span class="text-gray-700">(123) 123-1234</span>
+                <span class="text-gray-700">{user.phone}</span>
               </li>
               <li class="flex border-b py-2">
                 <span class="font-bold w-24">Email:</span>
-                <span class="text-gray-700">amandaross@example.com</span>
+                <span class="text-gray-700">{user.email}</span>
               </li>
               <li class="flex border-b py-2">
                 <span class="font-bold w-24">Address:</span>
-                <span class="text-gray-700">23 Ahmed Oraby, Agouza</span>
+                <span class="text-gray-700">{user.address}</span>
               </li>
-              <li class="flex border-b py-2">
+              {/* <li class="flex border-b py-2">
                 <span class="font-bold w-24">Number of orders:</span>
                 <span class="text-gray-700 text-center">5</span>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

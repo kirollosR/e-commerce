@@ -7,11 +7,13 @@ const userApi = axios.create({
 
 export const getUsers = () => userApi.get('/');
 export const deleteUser = id => userApi.delete(`/${id}`);
-export const isAdmin = () => userApi.post(data)
+export const getUser = userToken => userApi.get(`/getUser`, { headers: { token: userToken } });
+export const isAdmin = () => userApi.post(data);
 
 const apis = {
     getUsers,
     deleteUser,
+    getUser,
     isAdmin
 }
 

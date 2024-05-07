@@ -98,7 +98,7 @@ export const adminNavBarList = [
   {
     _id: 1008,
     title: "Users",
-    link: "/about",
+    link: "/admin/users",
   },
   {
     _id: 1009,
