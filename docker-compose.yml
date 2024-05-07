@@ -63,9 +63,6 @@ services:
       - ./userService:/app
       - /app/node_modules
 
-  categoryservice:
-    build: ./categoryservice
-    container_name: categories_container
   categoryService:
     build: ./categoryService
     container_name: ecommerce_category_Service
@@ -76,7 +73,6 @@ services:
       - e-commerce-app
     volumes:
       - ./categoryservice:/app
-      - ./categoryService:/app
       - /app/__pycache__
 
   category_db:
@@ -84,7 +80,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - my-app
+      - e-commerce-app
     volumes:
       - category-volume:/var/lib/mysql
     environment:
