@@ -1,16 +1,16 @@
 version: "3"
 services:
-  # client:
-  #   build: ./client
-  #   container_name: ecommerce_client
-  #   stdin_open: true
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #     - e-commerce-app
-  #   volumes:
-  #     - ./client:/app
-  #     - /app/node_modules
+  client:
+    build: ./client
+    container_name: ecommerce_client
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - e-commerce-app
+    volumes:
+      - ./client:/app
+      - /app/node_modules
 
   auth-service:
     build: ./authService
