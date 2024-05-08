@@ -52,12 +52,12 @@ const Layout = () => {
         theme="colored"
       />
       <Header />
-      <HeaderBottom />
+      {/* <HeaderBottom /> */}
       <SpecialCase />
       <ScrollRestoration />
       <Outlet />
 
-      <Footer />
+      {/* <Footer /> */}
       <FooterBottom />
     </div>
   );
@@ -83,7 +83,7 @@ const Admin = () => {
       
       {/* <ScrollRestoration /> */}
       <Outlet />
-      <Footer />
+      {/* <Footer /> */}
       <FooterBottom />
     </div>
   );
