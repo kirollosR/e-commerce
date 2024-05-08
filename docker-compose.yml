@@ -66,7 +66,7 @@ services:
       - /app/node_modules
 
   categoryservice:
-    build: ./categoryservice
+    build: ./categoryService
     container_name: categories_container
     stdin_open: true
     ports:
@@ -79,7 +79,7 @@ services:
     depends_on:
       - category_db
     volumes:
-      - ./categoryservices:/app
+      - ./categoryServices:/app
       - /app/__pycache__
 
   category_db:
@@ -91,7 +91,9 @@ services:
     volumes:
       - category-volume:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_DATABASE: category_database
 
 networks:

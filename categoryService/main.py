@@ -17,20 +17,49 @@ app.add_middleware(
 
 
 
+
 def execute_query(query, values=None):
-    connection = mysql.connector.connect(user='root', password='root', host="127.0.0.1", port="3306", database='category_database')
+    connection = mysql.connector.connect(user='root', password='root', host="category_db", port="3306", database="category_database")
     print("DB connected")
     cursor = connection.cursor()
-    if values:
-        cursor.execute(query, values)
+
+    # Split the query into individual statements
+    queries = query.split(';')
+
+    for q in queries:
+        if q.strip():
+            # Execute each statement
+            if values:
+                cursor.execute(q, values)
+            else:
+                cursor.execute(q)
+
+    # If the last statement is a SELECT, fetch the results
+    if q.strip().lower().startswith('select'):
+        result = cursor.fetchall()
     else:
-        cursor.execute(query)
-    result = cursor.fetchall() 
+        result = None
+
     connection.commit()
     cursor.close()
     connection.close()
     return result
 
+# Define your SQL script
+sql_script = """
+CREATE DATABASE IF NOT EXISTS category_database;
+
+use category_database;
+
+CREATE TABLE IF NOT EXISTS categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+"""
+
+# Execute the SQL script
+execute_query(sql_script)
+print("Table created")
 
 class Category(BaseModel):
     name: str
