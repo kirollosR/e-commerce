@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+mysql-connector-python
+# fastapi
+# uvicorn
+# gunicorn
+# mysql-connector-python

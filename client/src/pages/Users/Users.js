@@ -3,19 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Table2 } from "../../components/Table/Table2";
 import { Table3 } from "../../components/Table/Table3";
 import Table4 from "../../components/Table/Table4";
-import userApis from "../../apis/userApi"; // replace with the actual path to your userApi file
-
-// const fetchData = async () => {
-//   try {
-//     const users = await userApi.getUsers();
-//     console.log(users);
-//   } catch (error) {
-//     console.error("Failed to fetch users:", error);
-//   }
-// };
-
-// fetchData();
-// console.log(fetchData());
+import userApis from "../../apis/userApis"; // replace with the actual path to your userApi file
+import { getAuthenticatedUser } from "../../helper/Storage";
 
 const generateRandomName = () => {
   const names = ["John", "Jane", "Michael", "Emily", "David", "Sarah"];
@@ -56,6 +45,7 @@ const generateUsers = (count) => {
 };
 
 const Users = () => {
+  const auth = getAuthenticatedUser();
   const [data, setData] = useState({
     result: [],
     loading: true,
@@ -64,21 +54,18 @@ const Users = () => {
   });
   // const [loading, setLoading] = useState(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(async () => {
-    setData({ ...data, loading: true });
-    await userApis
-      .getUsers()
-      .then((response) => {
-        console.log(response.data.users);
-        console.log("response: ", response);
+  useEffect(() => {
+    const fetchData = async () => {
+      setData({ ...data, loading: true });
+      try {
+        const response = await userApis.getUsers(auth.user.token);
         setData({
           ...data,
           result: response.data.users,
           loading: false,
           error: null,
         });
-      })
-      .catch((error) => {
+      } catch (error) {
         setData({
           result: [],
           loading: false,
@@ -86,37 +73,44 @@ const Users = () => {
             error?.response?.data?.error ||
             "The User service is under maintenance",
         });
-      });
+      }
+    };
+
+    fetchData();
   }, []);
-  console.log("error: ", data.error);
-  console.log(data.result);
-  // const transformedData = data.result.map((user, index) => {
-  //   return {
-  //     id: user._id,
-  //     username: user.username,
-  //     name: user.name,
-  //     email: user.email,
-  //     address: user.address,
-  //     phone: user.phone
-  //   };
-  // });
+  // console.log("error: ", data.error);
+  // console.log(data.result);
 
-  // console.log(transformedData);
-
-  // const users = generateUsers(50);
-  // console.log(users);
+  const deleteHandler = async (id) => {
+    await userApis
+      .deleteUser(id, auth.user.token)
+      .then((response) => {
+        // console.log(response.data);
+        setData({ ...data, reload: data.reload + 1 });
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 5000);
+        window.location.reload();
+      })
+      .catch((error) => {
+        // console.error("Failed to delete user:", error);
+        setData({
+          ...data,
+          error:
+            error?.response?.data?.error ||
+            "The User service is under maintenance",
+        });
+      });
+  };
 
   return (
     <div className="mt-3 mb-3">
-      {/* <div className="flex justify-center items-center h-screen"> */}
-      {/* <input type="text" placeholder="Search" className="border-2 border-gray-300 p-2 rounded-lg" /> */}
-      {/* <Table2 /> */}
       {data.loading && (
         <div className="flex justify-center">
           <div role="status">
             <svg
               aria-hidden="true"
-              class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -130,18 +124,18 @@ const Users = () => {
                 fill="currentFill"
               />
             </svg>
-            <span class="sr-only">Loading...</span>
+            <span className="sr-only">Loading...</span>
           </div>
         </div>
       )}
       {data.error && (
         <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
           <div
-            class="flex justify-center items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 md:w-1/4"
+            className="flex justify-center items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 md:w-5/6"
             role="alert"
           >
             <svg
-              class="flex-shrink-0 inline w-4 h-4 me-3"
+              className="flex-shrink-0 inline w-4 h-4 me-3"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
@@ -149,17 +143,17 @@ const Users = () => {
             >
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>
-            <span class="sr-only">Info</span>
-            <div class="text-lg">
-              <span class="font-medium"></span> {data.error}
+            <span className="sr-only">Info</span>
+            <div className="text-lg">
+              <span className="font-medium"></span> {data.error}
             </div>
           </div>
           <button
             type="button"
-            class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 w-1/6"
           >
             <svg
-              class="h-5 w-5 mr-3"
+              className="h-5 w-5 mr-3"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -179,11 +173,9 @@ const Users = () => {
           canAdd={true}
           pageName={"User"}
           canEdit={false}
+          deleteHandler={deleteHandler}
         />
       )}
-      {/* <Table3 data={data.result} canAdd={true} pageName={"User"} canEdit={false} /> */}
-      {/* <UserTable users={users} /> */}
-      {/* <Table4 users={users} /> */}
     </div>
   );
 };

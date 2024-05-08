@@ -5,15 +5,23 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import { motion } from "framer-motion";
 import { logo, logoLight } from "../../../assets/images";
 import Image from "../../designLayouts/Image";
-import { navBarList } from "../../../constants";
+import { navBarList, guestNavBarList } from "../../../constants";
 import Flex from "../../designLayouts/Flex";
-
+import { useNavigate } from "react-router-dom";
+import { getAuthenticatedUser, removeAuthUser } from "../../../helper/Storage";
 const Header = () => {
   const [showMenu, setShowMenu] = useState(true);
   const [sidenav, setSidenav] = useState(false);
   const [category, setCategory] = useState(false);
   const [brand, setBrand] = useState(false);
   const location = useLocation();
+
+  const navigate = useNavigate();
+  const auth = getAuthenticatedUser();
+  const Logout = () => {
+    removeAuthUser();
+    navigate("/");
+  };
   useEffect(() => {
     let ResponsiveMenu = () => {
       if (window.innerWidth < 667) {
@@ -43,18 +51,39 @@ const Header = () => {
                 transition={{ duration: 0.5 }}
                 className="flex items-center w-auto z-50 p-0 gap-2"
               >
-                <>
-                  {navBarList.map(({ _id, title, link }) => (
+                {auth ? (
+                  // Render navBarList if user is authenticated
+                  navBarList.map(({ _id, title, link }) => (
                     <NavLink
                       key={_id}
                       className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
                       to={link}
                       state={{ data: location.pathname.split("/")[1] }}
                     >
-                      <li>{title}</li>
+                      {title === "Logout" ? (
+                        <li onClick={Logout}>{title}</li>
+                      ) : (
+                        <li>{title}</li>
+                      )}
                     </NavLink>
-                  ))}
-                </>
+                  ))
+                ) : (
+                  // Render guestNavBarList if user is not authenticated
+                  guestNavBarList.map(({ _id, title, link }) => (
+                    <NavLink
+                      key={_id}
+                      className="flex font-normal hover:font-bold w-20 h-6 justify-center items-center px-12 text-base text-[#767676] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] md:border-r-[2px] border-r-gray-300 hoverEffect last:border-r-0"
+                      to={link}
+                      state={{ data: location.pathname.split("/")[1] }}
+                    >
+                      {title === "Logout" ? (
+                        <li onClick={Logout}>{title}</li>
+                      ) : (
+                        <li>{title}</li>
+                      )}
+                    </NavLink>
+                  ))
+                )}
               </motion.ul>
             )}
             <HiMenuAlt2

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -5,6 +6,7 @@ import {
   createRoutesFromElements,
   Route,
   ScrollRestoration,
+  Navigate,
 } from "react-router-dom";
 import Footer from "./components/home/Footer/Footer";
 import FooterBottom from "./components/home/Footer/FooterBottom";
@@ -25,6 +27,14 @@ import Shop from "./pages/Shop/Shop";
 import Users from "./pages/Users/Users";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminHome from "./pages/Admin/AdminHome/AdminHome";
+import ProfilePage from "./pages/Profile/ProfilePage";
+
+import { getAuthenticatedUser } from "./helper/Storage";
+import AdminHeader from "./components/Admin/AdminHeader/AdminHeader";
+import AddCategoryForm from "./pages/Admin/AddCategory/AddCategoryForm";
+import EditProfile from "./pages/Profile/EditProfile";
+import Categories from "./pages/Categories/Categories";
 
 const Layout = () => {
   return (
@@ -42,11 +52,12 @@ const Layout = () => {
         theme="colored"
       />
       <Header />
-      <HeaderBottom />
+      {/* <HeaderBottom /> */}
       <SpecialCase />
       <ScrollRestoration />
       <Outlet />
-      <Footer />
+
+      {/* <Footer /> */}
       <FooterBottom />
     </div>
   );
@@ -67,43 +78,133 @@ const Admin = () => {
         pauseOnHover
         theme="colored"
       />
-      <Header />
+      <AdminHeader />
       
       
-      <ScrollRestoration />
+      {/* <ScrollRestoration /> */}
       <Outlet />
-      <Footer />
+      {/* <Footer /> */}
       <FooterBottom />
     </div>
   );
 };
+// const router = createBrowserRouter(
+//   createRoutesFromElements(
+//     <Route>
+//       <Route path="/" element={<Layout />}>
+//         {/* ==================== Header Navlink Start here =================== */}
+//         <Route index element={<Home />}></Route>
+//         <Route path="/shop" element={<Shop />}></Route>
+//         <Route path="/about" element={<About />}></Route>
+//         <Route path="/contact" element={<Contact />}></Route>
+//         <Route path="/journal" element={<Journal />}></Route>
+//         {/* ==================== Header Navlink End here ===================== */}
+//         <Route path="/profile" element={<Profile/>}></Route>
+//         <Route path="/admin-home" element={<AdminHome />}></Route>
+//         <Route path="/category/:category" element={<Offer />}></Route>
+//         <Route path="/product/:_id" element={<ProductDetails />}></Route>
+//         <Route path="/cart" element={<Cart />}></Route>
+//         <Route path="/paymentgateway" element={<Payment />}></Route>
+//         {/* <Route path="/users" element={<Users />}></Route> */}
+//       </Route>
+//       <Route path="admin" element={<Admin />}>
+//         <Route path="users" element={<Users />}></Route>
+//       </Route>
+        
+//       <Route path="/signup" element={<SignUp />}></Route>
+//       <Route path="/signin" element={<SignIn />}></Route>
+      
+//     </Route>
+//   )
+// );
+
+
+
+
+const ProtectedRoute = ({ element, redirectTo }) => {
+  return getAuthenticatedUser() ? (
+    element
+  ) : (
+    <Navigate to={redirectTo} replace />
+  );
+};
+
+const AdminRoute = ({ element }) => {
+  const auth = getAuthenticatedUser();
+  return auth && auth.user.role === "admin" ? element : <Navigate to="/" replace />;
+}
+
+const GuestRoute = ({ element, redirectTo }) => {
+  return !getAuthenticatedUser() ? (
+    element
+  ) : (
+    <Navigate to={redirectTo} replace />
+  );
+};
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      <Route path="/" element={<Layout />}>
-        {/* ==================== Header Navlink Start here =================== */}
-        <Route index element={<Home />}></Route>
-        <Route path="/shop" element={<Shop />}></Route>
-        <Route path="/about" element={<About />}></Route>
-        <Route path="/contact" element={<Contact />}></Route>
-        <Route path="/journal" element={<Journal />}></Route>
-        {/* ==================== Header Navlink End here ===================== */}
-        <Route path="/category/:category" element={<Offer />}></Route>
-        <Route path="/product/:_id" element={<ProductDetails />}></Route>
-        <Route path="/cart" element={<Cart />}></Route>
-        <Route path="/paymentgateway" element={<Payment />}></Route>
-        {/* <Route path="/users" element={<Users />}></Route> */}
-      </Route>
-      <Route path="admin" element={<Admin />}>
-        <Route path="users" element={<Users />}></Route>
-      </Route>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
         
-      <Route path="/signup" element={<SignUp />}></Route>
-      <Route path="/signin" element={<SignIn />}></Route>
-      
+        
+        
+        <Route
+          path="/profile"
+          element={<ProtectedRoute element={<ProfilePage />} redirectTo="/signin" />}
+        >
+          {/* <Route path="/profile/edit" element={<EditProfile />} /> */}
+        </Route>
+        <Route
+          path="/profile/edit"
+          element={<ProtectedRoute element={<EditProfile />} redirectTo="/signin" />}
+        />
+        {/* <Route
+          path="/users"
+          element={<ProtectedRoute element={<Users />} redirectTo="/signin" />}
+        /> */}
+        <Route
+          path="/shop"
+          element={<ProtectedRoute element={<Shop/>} redirectTo="/signin" />}
+        />
+        <Route
+          path="/cart"
+          element={<ProtectedRoute element={<Cart/>} redirectTo="/signin" />}
+        />
+        <Route
+          path="/shop"
+          element={<ProtectedRoute element={<Shop/>} redirectTo="/signin" />}
+        />
+        <Route
+          path="/product/:_id"
+          element={<ProtectedRoute element={<ProductDetails />} redirectTo="/signin" />}
+        />
+      </Route>
+      <Route
+        path="/admin"
+        element={<AdminRoute element={<Admin />} redirectTo="/" />}
+      >
+        <Route path="/admin/home" element={<Home />} />
+        <Route path="/admin/categories" element={<Categories />} />
+        <Route path="/admin/Addcategory" element={<AddCategoryForm />} />
+        <Route path="/admin-home" element={<AdminHome />} />
+        <Route path="/admin/users" element={<Users />} />
+      </Route>
+
+      <Route
+        path="/signin"
+        element={<GuestRoute element={<SignIn />} redirectTo="/" />}
+      />
+      <Route
+        path="/signup"
+        element={<GuestRoute element={<SignUp />} redirectTo="/" />}
+      />
+    
     </Route>
   )
 );
+
 
 function App() {
   return (
@@ -114,3 +215,32 @@ function App() {
 }
 
 export default App;
+
+// function App() {
+//   return (
+//     <div className="font-bodyFont">
+//       <ToastContainer
+//         position="top-right"
+//         autoClose={1000}
+//         hideProgressBar={false}
+//         newestOnTop={false}
+//         closeOnClick
+//         rtl={false}
+//         pauseOnFocusLoss
+//         draggable
+//         pauseOnHover
+//         theme="colored"
+//       />
+//       <Header />
+//       <HeaderBottom />
+//       <SpecialCase />
+//       <ScrollRestoration />
+//       <Outlet />
+
+//       <Footer />
+//       <FooterBottom />
+//     </div>
+//   );
+// }
+
+// export default App;
