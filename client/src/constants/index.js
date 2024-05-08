@@ -67,21 +67,21 @@ export const navBarList = [
     title: "Shop",
     link: "/shop",
   },
-  {
-    _id: 1003,
-    title: "About",
-    link: "/about",
-  },
-  {
-    _id: 1004,
-    title: "Contact",
-    link: "/contact",
-  },
-  {
-    _id: 1005,
-    title: "Journal",
-    link: "/journal",
-  },
+  // {
+  //   _id: 1003,
+  //   title: "About",
+  //   link: "/about",
+  // },
+  // {
+  //   _id: 1004,
+  //   title: "Contact",
+  //   link: "/contact",
+  // },
+  // {
+  //   _id: 1005,
+  //   title: "Journal",
+  //   link: "/journal",
+  // },
   {
     _id: 1006,
     title: "Logout",
@@ -104,11 +104,11 @@ export const adminNavBarList = [
     title: "Users",
     link: "/admin/users",
   },
-  {
-    _id: 1009,
-    title: "Products",
-    link: "contact",
-  },
+  // {
+  //   _id: 1009,
+  //   title: "Products",
+  //   link: "contact",
+  // },
   {
     _id: 1010,
     title: "Logout",

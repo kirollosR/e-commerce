@@ -168,6 +168,18 @@ const router = createBrowserRouter(
           path="/shop"
           element={<ProtectedRoute element={<Shop/>} redirectTo="/signin" />}
         />
+        <Route
+          path="/cart"
+          element={<ProtectedRoute element={<Cart/>} redirectTo="/signin" />}
+        />
+        <Route
+          path="/shop"
+          element={<ProtectedRoute element={<Shop/>} redirectTo="/signin" />}
+        />
+        <Route
+          path="/product/:_id"
+          element={<ProtectedRoute element={<ProductDetails />} redirectTo="/signin" />}
+        />
       </Route>
       <Route
         path="/admin"
